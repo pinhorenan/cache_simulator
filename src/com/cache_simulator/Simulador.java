@@ -1,11 +1,21 @@
 package com.cache_simulator;
 
-import java.io.IOException;
+import java.io.*;
+import java.util.*;
 
 public class Simulador {
 
     private Cache cache;
     private Simulacao simulacao;
+    private List<Integer> listaEnderecos;
+
+    // Construtor
+     
+    public Simulador() {
+        listaEnderecos = new ArrayList<>();
+    }
+
+    // Método principal (a princípio está OK, mas pode ser necessário ajustar para receber os parâmetros da linha de comando)
     
     public static void main(String[] args) {    
         if (args.length < 6) {
@@ -29,17 +39,33 @@ public class Simulador {
         }
     }
 
+    // Métodos
+
     private void rodarSimulacao(int nsets, int bsize, int assoc, String politicaSubstituicao, boolean flagSaida, String arquivoEntrada) throws IOException {
         cache = new Cache(nsets, bsize, assoc, politicaSubstituicao);
         simulacao = new Simulacao(cache);
 
+        // Processar o arquivo de entrada (carrega os endereços na lista)
         processarArquivoEntrada(arquivoEntrada);
+
+        for (int endereco : simulacao.getEnderecos(listaEnderecos)) {
+            simulacao.acessarEndereco(endereco);
+        }
 
         gerarArquivoSaida(flagSaida);
     }
 
-    private void processarArquivoEntrada(String arquivoEntrada) {
-        // Implementar leitura do arquivo de entrada
+    private void processarArquivoEntrada(String arquivoEntrada) throws IOException {
+        try (DataInputStream dataStream = new DataInputStream(new FileInputStream(arquivoEntrada))) {
+            while (dataStream.available() > 0) {
+                // Lê um endereço de 32 bits em Big Endian
+                int endereco = dataStream.readInt();
+                System.out.println("Endereço lido: " + endereco); // Log para DEBUG
+                listaEnderecos.add(endereco);
+            }
+        } catch (IOException e) {
+            throw new IOException("Erro ao ler o arquivo de entrada: " + e.getMessage());
+        }
     }
 
     private void gerarArquivoSaida(boolean flagSaida) {
@@ -56,8 +82,6 @@ public class Simulador {
         // Formato livre para a opção mais verbosa, com informações detalhadas sobre a simulação.
 
         System.out.println("Total de acessos: " + simulacao.getAcessos());
-        System.out.println("Total de leituras: " + simulacao.getLeituras());
-        System.out.println("Total de escritas: " + simulacao.getEscritas());
         System.out.println("Total de hits: " + simulacao.getHits());
         System.out.println("Total de misses: " + simulacao.getMisses());
         System.out.println("Total de misses compulsórios: " + simulacao.getMissesCompulsorios());
@@ -66,8 +90,6 @@ public class Simulador {
 
 
         // Taxas
-        System.out.println("Porcentagem de acessos que foram leituras: " + simulacao.getTaxaLeitura());
-        System.out.println("Porcentagem de acessos que foram escritas: " + simulacao.getTaxaEscrita());
         System.out.println("Taxa de hit: " + simulacao.getTaxaHit());
         System.out.println("Taxa de miss: " + simulacao.getTaxaMiss());
         System.out.println("Taxa de miss compulsório: " + simulacao.getTaxaMissCompulsorio());

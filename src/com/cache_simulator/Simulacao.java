@@ -1,9 +1,10 @@
 package com.cache_simulator;
 
+import java.util.List;
+
 public class Simulacao {
     private final Cache cache;
-    private int escritas;
-    private int leituras;
+    private int acessos;
     private int hits;
     private int missesCompulsorios;
     private int missesCapacidade;
@@ -17,46 +18,59 @@ public class Simulacao {
         this.missesCapacidade = 0;
         this.missesConflito = 0;
         this.hits = 0;
-        this.leituras = 0;
-        this.escritas = 0;
+        this.acessos = 0;
     }
 
     // Métodos
 
+    public List<Integer> getEnderecos(List<Integer> enderecos) {
+        return enderecos;
+    }
+
     public void acessarEndereco(int endereco) {
-        // Recebe um endereço e verifica se o bloco correspondente está na cache.
-
-
-        // PRECISO SABER SE É LEITURA OU ESCRITA!
-
-
         // Calcular tag e index
         int tag = endereco >> (cache.getNumeroBitsIndex() + cache.getNumeroBitsOffset());
-        int index = (endereco >> cache.getNumeroBitsOffset()) & ((1 << cache.getNumeroBitsIndex()) - 1); // REVISAR ESSAS COISAS!!!!!!!!!
-
+        int index = (endereco >> cache.getNumeroBitsOffset()) & ((1 << cache.getNumeroBitsIndex()) - 1);
+    
         // Verificar se há hit ou miss
+        boolean hit = false;
+        boolean missCompulsorio = false;
+        boolean missConflito = false;
+        @SuppressWarnings("unused")
+        boolean missCapacidade = false; // Não implementado ainda.
+    
+        // Verifica se há algum bloco válido no conjunto
+        boolean blocoValido = cache.getValidade(index) == 1;
+    
+        incrementaAcesso();
 
-        if (cache.getValidade(index) == 0) {
-            // Se o bloco não está na cache, é um miss compulsório
+        if (!blocoValido) {
+            // MISS COMPULSÓRIO: O bloco nunca foi carregado
+            missCompulsorio = true;
             incrementaMissCompulsorio();
             cache.setValido(index);
             cache.setTag(index, tag);
-            return;
-        } 
-        else if (cache.getTag(index) == tag) {
-            // Se o bloco está na cache, é um hit
+        } else if (cache.getTag(index) == tag) {
+            // HIT: O bloco está na cache
+            hit = true;
             incrementaHit();
-            return;
-        } 
-        else {
-            // Se o bloco não está na cache, é um miss de conflito ou capacidade, preciso dar um jeito de diferenciar!!!
-            incrementaMissConflito(); // PROVISORIO
-            incrementaMissCapacidade(); // PROVISORIO
+        } else {
+            // MISS: O bloco está na cache, mas a tag é diferente
+            missConflito = true; // Para agora, vamos tratar todos como miss de conflito.
+            incrementaMissConflito();
             cache.setTag(index, tag);
-            return; // Miss
+        }
+    
+        // LOGS P/ DEBUG APENAS. PODEM SER REMOVIDOS.
+        if (hit) {
+            System.out.println("HIT: Endereço " + endereco + " encontrado na cache.");
+        } else if (missCompulsorio) {
+            System.out.println("MISS COMPULSÓRIO: Endereço " + endereco + " adicionado à cache.");
+        } else if (missConflito) {
+            System.out.println("MISS DE CONFLITO: Substituindo bloco no conjunto.");
         }
     }
-
+    
     // Incrementadores
 
     public void incrementaMissCompulsorio() {
@@ -75,26 +89,14 @@ public class Simulacao {
         this.hits++;
     }
 
-    public void incrementaLeitura() {
-        this.leituras++;
-    }
-
-    public void incrementaEscrita() {
-        this.escritas++;
+    public void incrementaAcesso() {
+        this.acessos++;
     }
 
     // Getters
 
-    public int getLeituras() {
-        return leituras;
-    }
-
-    public int getEscritas() {
-        return escritas;
-    }
-
     public int getAcessos() {
-        return leituras + escritas;
+        return acessos;
     }
 
     public int getHits() {
@@ -122,30 +124,22 @@ public class Simulacao {
     // Getters de Taxas
 
     public double getTaxaHit() {
-        return (double) hits / (leituras + escritas);
+        return (double) hits / (acessos);
     }
 
     public double getTaxaMiss() {
-        return (double) getMisses() / (leituras + escritas);
+        return (double) getMisses() / (acessos);
     }
 
     public double getTaxaMissCompulsorio() {
-        return (double) missesCompulsorios / (leituras + escritas);
+        return (double) missesCompulsorios / (acessos);
     }
 
     public double getTaxaMissCapacidade() {
-        return (double) missesCapacidade / (leituras + escritas);
+        return (double) missesCapacidade / (acessos);
     }
 
     public double getTaxaMissConflito() {
-        return (double) missesConflito / (leituras + escritas);
-    }
-
-    public double getTaxaLeitura() {
-        return (double) leituras / (leituras + escritas);
-    }
-
-    public double getTaxaEscrita() {
-        return (double) escritas / (leituras + escritas);
+        return (double) missesConflito / (acessos);
     }
 }
