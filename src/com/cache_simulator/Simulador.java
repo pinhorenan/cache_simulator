@@ -4,18 +4,13 @@ import java.io.*;
 import java.util.*;
 
 public class Simulador {
-
     private Cache cache;
     private Simulacao simulacao;
     private List<Integer> listaEnderecos;
-
-    // Construtor
      
     public Simulador() {
         listaEnderecos = new ArrayList<>();
     }
-
-    // Método principal (a princípio está OK, mas pode ser necessário ajustar para receber os parâmetros da linha de comando)
     
     public static void main(String[] args) {    
         if (args.length < 6) {
@@ -23,7 +18,6 @@ public class Simulador {
             return;
         }
 
-        // Capturar os parâmetros da linha de comando
         int nsets = Integer.parseInt(args[0]);
         int bsize = Integer.parseInt(args[1]);
         int assoc = Integer.parseInt(args[2]);
@@ -32,6 +26,7 @@ public class Simulador {
         String arquivoEntrada = args[5];
 
         Simulador simulador = new Simulador();
+        
         try {
             simulador.rodarSimulacao(nsets, bsize, assoc, politicaSubstituicao, flagSaida, arquivoEntrada);
         } catch (IOException e) {
@@ -39,14 +34,16 @@ public class Simulador {
         }
     }
 
-    // Métodos
-
     private void rodarSimulacao(int nsets, int bsize, int assoc, String politicaSubstituicao, boolean flagSaida, String arquivoEntrada) throws IOException {
         cache = new Cache(nsets, bsize, assoc, politicaSubstituicao);
-        simulacao = new Simulacao(cache);
 
-        // Processar o arquivo de entrada (carrega os endereços na lista)
-        processarArquivoEntrada(arquivoEntrada);
+        if (flagSaida) {
+            simulacao = new Simulacao(cache, true);
+        } else {
+            simulacao = new Simulacao(cache, false);
+        }
+
+        processarArquivoEntrada(arquivoEntrada, flagSaida);
 
         for (int endereco : simulacao.getEnderecos(listaEnderecos)) {
             simulacao.acessarEndereco(endereco);
@@ -55,12 +52,16 @@ public class Simulador {
         gerarArquivoSaida(flagSaida);
     }
 
-    private void processarArquivoEntrada(String arquivoEntrada) throws IOException {
+    private void processarArquivoEntrada(String arquivoEntrada, boolean debugMode) throws IOException {
         try (DataInputStream dataStream = new DataInputStream(new FileInputStream(arquivoEntrada))) {
             while (dataStream.available() > 0) {
-                // Lê um endereço de 32 bits em Big Endian
                 int endereco = dataStream.readInt();
-                System.out.println("Endereço lido: " + endereco); // Log para DEBUG
+
+                //DEBUG
+                if (debugMode) {
+                    System.out.println("Endereço lido: " + endereco);
+                }
+
                 listaEnderecos.add(endereco);
             }
         } catch (IOException e) {
@@ -79,17 +80,12 @@ public class Simulador {
     }
 
     private void saidaVerbosa() {
-        // Formato livre para a opção mais verbosa, com informações detalhadas sobre a simulação.
-
         System.out.println("Total de acessos: " + simulacao.getAcessos());
         System.out.println("Total de hits: " + simulacao.getHits());
         System.out.println("Total de misses: " + simulacao.getMisses());
         System.out.println("Total de misses compulsórios: " + simulacao.getMissesCompulsorios());
         System.out.println("Total de misses de capacidade: " + simulacao.getMissesCapacidade());
         System.out.println("Total de misses de conflito: " + simulacao.getMissesConflito());    
-
-
-        // Taxas
         System.out.println("Taxa de hit: " + simulacao.getTaxaHit());
         System.out.println("Taxa de miss: " + simulacao.getTaxaMiss());
         System.out.println("Taxa de miss compulsório: " + simulacao.getTaxaMissCompulsorio());
@@ -98,13 +94,12 @@ public class Simulador {
     }
 
     private void saidaSimples() {
-        // Formato resumido com ordem fixada pelo professor (Provavelmente vai ser processada por um teste automatizado).
-            // A ordem deverá ser: Total de acessos, Taxa de hit, Taxa de miss, Taxa de miss compulsório, Taxa de miss de capacidade, Taxa de miss conflito.
-            // Ex.: 100000, 0.95, 0.06, 0.17, 0.33, 0.50
+        // A ordem deverá ser: Total de acessos, Taxa de hit, Taxa de miss, Taxa de miss compulsório, Taxa de miss de capacidade, Taxa de miss conflito.
+        // Ex.: 100000, 0.95, 0.06, 0.17, 0.33, 0.50
 
-            System.out.println(simulacao.getAcessos() + ", " + simulacao.getTaxaHit() + ", " + simulacao.getTaxaMiss() + ", " + simulacao.getTaxaMissCompulsorio() + ", " + simulacao.getTaxaMissCapacidade() + ", " + simulacao.getTaxaMissConflito());
+        System.out.println(simulacao.getAcessos() + ", " + simulacao.getTaxaHit() + ", " + simulacao.getTaxaMiss() + ", " + simulacao.getTaxaMissCompulsorio() + ", " + simulacao.getTaxaMissCapacidade() + ", " + simulacao.getTaxaMissConflito());
 
-            // OBSERVAÇÃO: A saída nesse caso está ambigua na questão da vírgula. Os primeiros valores ele botou virgula separando um do outro, depois não tem mais vírgula, pode atrapalhar em testes automaticos, CHECAR COM ELE!
+        // OBSERVAÇÃO: A saída nesse caso está ambigua na questão da vírgula. Os primeiros valores ele botou virgula separando um do outro, depois não tem mais vírgula, pode atrapalhar em testes automaticos, CHECAR COM ELE!
     }
     
 }

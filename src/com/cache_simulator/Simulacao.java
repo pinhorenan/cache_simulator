@@ -9,16 +9,18 @@ public class Simulacao {
     private int missesCompulsorios;
     private int missesCapacidade;
     private int missesConflito;
+    private boolean debugMode;
     
     // Construtor
 
-    public Simulacao(Cache cache) {
+    public Simulacao(Cache cache, boolean debugMode) {
         this.cache = cache;
         this.missesCompulsorios = 0;
         this.missesCapacidade = 0;
         this.missesConflito = 0;
         this.hits = 0;
         this.acessos = 0;
+        this.debugMode = debugMode;
     }
 
     // Métodos
@@ -28,11 +30,16 @@ public class Simulacao {
     }
 
     public void acessarEndereco(int endereco) {
-        // Calcular tag e index
-        int tag = endereco >> (cache.getNumeroBitsIndex() + cache.getNumeroBitsOffset());
-        int index = (endereco >> cache.getNumeroBitsOffset()) & ((1 << cache.getNumeroBitsIndex()) - 1);
-    
-        // Verificar se há hit ou miss
+        int bitsOffset = cache.getNumeroBitsOffset();
+        int bitsIndex = cache.getNumeroBitsIndex();
+        int tag = endereco >> (bitsOffset + bitsIndex); 
+        int index = (endereco >> bitsOffset) & ((1 << bitsIndex) - 1);
+
+        //DEBUG
+        if(debugMode) {
+            System.out.println("Endereço: " + endereco + " | Tag: " + tag + " | Índice: " + index);
+        }
+        
         boolean hit = false;
         boolean missCompulsorio = false;
         boolean missConflito = false;
@@ -61,13 +68,16 @@ public class Simulacao {
             cache.setTag(index, tag);
         }
     
-        // LOGS P/ DEBUG APENAS. PODEM SER REMOVIDOS.
-        if (hit) {
-            System.out.println("HIT: Endereço " + endereco + " encontrado na cache.");
-        } else if (missCompulsorio) {
-            System.out.println("MISS COMPULSÓRIO: Endereço " + endereco + " adicionado à cache.");
-        } else if (missConflito) {
-            System.out.println("MISS DE CONFLITO: Substituindo bloco no conjunto.");
+
+        // Logs para DEBUG.
+        if(debugMode) {
+            if (hit) {
+                System.out.println("HIT: Endereço " + endereco + " encontrado na cache.");
+            } else if (missCompulsorio) {
+                System.out.println("MISS COMPULSÓRIO: Endereço " + endereco + " adicionado à cache.");
+            } else if (missConflito) {
+                System.out.println("MISS DE CONFLITO: Substituindo bloco no conjunto.");
+            }
         }
     }
     
@@ -132,14 +142,14 @@ public class Simulacao {
     }
 
     public double getTaxaMissCompulsorio() {
-        return (double) missesCompulsorios / (acessos);
+        return (double) missesCompulsorios / (getMisses());
     }
 
     public double getTaxaMissCapacidade() {
-        return (double) missesCapacidade / (acessos);
+        return (double) missesCapacidade / (getMisses());
     }
 
     public double getTaxaMissConflito() {
-        return (double) missesConflito / (acessos);
+        return (double) missesConflito / (getMisses());
     }
 }
