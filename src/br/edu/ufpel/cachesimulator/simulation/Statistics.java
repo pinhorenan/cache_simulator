@@ -63,6 +63,8 @@ public class Statistics {
         return conflictMisses;
     }
 
+    // Rate Getters
+
     public double getHitRate() {
         return (double) totalHits / (totalAcesses);
     }

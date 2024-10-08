@@ -7,17 +7,19 @@ import br.edu.ufpel.cachesimulator.policies.*;
 public class CacheFactory {
     public static Cache createCache(Configuration config) {
         ReplacementPolicy policy;
-        switch (config.getReplacementPolicy()) {
-            case "FIFO":
+        switch (config.getPolicy()) {
+            case "fifo":
                 policy = new FIFOPolicy();
                 break;
-            case "LRU":
-                policy = new LRUReplacementPolicy();
+            case "lru":
+                policy = new LRUPolicy();
                 break;
+            case "r":
+                policy = new RANDOMPolicy();
             default:
                 throw new IllegalArgumentException("Política de substituição inválida");
         }
-        return new Cache(config.getNumSets(), config.getBlockSize(), config.getAssociativity(), policy);
+        return new Cache(config.getNumberSets(), config.getBlockSize(), config.getAssociativity(), policy);
     }
 }
 

@@ -1,7 +1,9 @@
 package br.edu.ufpel.cachesimulator.simulation;
 
+import java.io.IOException;
 import java.util.List;
 
+import br.edu.ufpel.cachesimulator.config.FileHandler;
 import br.edu.ufpel.cachesimulator.model.Block;
 import br.edu.ufpel.cachesimulator.model.Cache;
 import br.edu.ufpel.cachesimulator.model.Set;
@@ -15,12 +17,14 @@ public class Simulation {
         this.cache = cache;
     }
 
-    private Statistics runSimulation(Cache cache, boolean outputFlag, String inputFile) throws IOException {
+    public Statistics runSimulation(Cache cache, String inputFile) throws IOException {
         Statistics statistics = new Statistics();
 
-        readInputFile(inputFile);
+        FileHandler addressReader = new FileHandler();
 
-        for (int address : getAddresses(adressesArray)) {
+        List<Integer> addressesArray = addressReader.readAddressesFromFile(inputFile);
+
+        for (int address : getAddresses(addressesArray)) {
             accessAddress(address);
         }
 

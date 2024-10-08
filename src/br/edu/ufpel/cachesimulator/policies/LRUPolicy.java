@@ -5,7 +5,7 @@ import java.util.List;
 
 import br.edu.ufpel.cachesimulator.model.Block;
 
-public class LRUReplacementPolicy implements ReplacementPolicy {
+public class LRUPolicy implements ReplacementPolicy {
     private List<Block> lruList = new ArrayList<>();
 
     @Override

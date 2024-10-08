@@ -1,6 +1,7 @@
 package br.edu.ufpel.cachesimulator.policies;
 
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Queue;
 
 import br.edu.ufpel.cachesimulator.model.Block;

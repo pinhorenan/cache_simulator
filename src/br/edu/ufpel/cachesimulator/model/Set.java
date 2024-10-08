@@ -1,5 +1,8 @@
 package br.edu.ufpel.cachesimulator.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import br.edu.ufpel.cachesimulator.policies.ReplacementPolicy;
 
 public class Set {
@@ -14,7 +17,7 @@ public class Set {
         }
         this.replacementPolicy = policy;
     }
-
+    
     // Métodos de acesso
     public void accessBlock(int tag) {
         Block block = findBlockByTag(tag);
@@ -25,7 +28,7 @@ public class Set {
             // Cache miss, substitui um bloco
             Block blockToReplace = replacementPolicy.selectBlockToReplace(blocks);
             blockToReplace.setTag(tag);
-            blockToReplace.setValid(true);
+            blockToReplace.setValid();
             replacementPolicy.update(blockToReplace);
         }
     }
