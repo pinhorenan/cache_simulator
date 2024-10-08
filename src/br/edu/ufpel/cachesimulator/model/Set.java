@@ -1,10 +1,12 @@
 package br.edu.ufpel.cachesimulator.model;
+
 import br.edu.ufpel.cachesimulator.policies.ReplacementPolicy;
 
 public class Set {
     private List<Block> blocks;
     private ReplacementPolicy replacementPolicy;
 
+    // Construtor
     public Set(int assoc, ReplacementPolicy policy) {
         blocks = new ArrayList<>(assoc);
         for (int i = 0; i < assoc; i++) {
@@ -13,6 +15,7 @@ public class Set {
         this.replacementPolicy = policy;
     }
 
+    // Métodos de acesso
     public void accessBlock(int tag) {
         Block block = findBlockByTag(tag);
         if (block != null) {

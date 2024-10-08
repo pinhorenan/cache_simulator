@@ -16,4 +16,6 @@ public class FileHandler {
     public static void writeOutputToFile(Simulation simulation, boolean verbose) {
         // Implementar escrita de saída
     }
+
+    
 }

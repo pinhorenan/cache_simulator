@@ -3,11 +3,10 @@ package br.edu.ufpel.cachesimulator.simulation;
 import java.io.*;
 import java.util.*;
 
+import br.edu.ufpel.cachesimulator.config.Configuration;
 import br.edu.ufpel.cachesimulator.model.Cache;
 
 public class Simulator {
-    private Cache cache;
-    private Simulation simulation;
     private List<Integer> addresses;
      
     public Simulator() {
@@ -30,50 +29,18 @@ public class Simulator {
         boolean outputFlag = args[4].equals("1");
         String inputFile = args[5];
 
+        Configuration configuration = new Configuration(nsets, bsize, assoc, subPolicy);
+        Cache cache = new Cache(configuration);
+        Simulation simulation = new Simulation(cache);
         
         try {
-            simulation.runSimulation(nsets, bsize, assoc, subPolicy, outputFlag, inputFile);
+            generateOutputFile(simulation.runSimulation(inputFile), outputFlag);
         } catch (IOException e) {
             System.err.println("Erro ao processar o arquivo de entrada: " + e.getMessage());
         }
     }
 
-    private void runSimulation(int nsets, int bsize, int assoc, String subPolicy, boolean outputFlag, String inputFile) throws IOException {
-        cache = new Cache(nsets, bsize, assoc, subPolicy);
-
-        if (outputFlag) {
-            simulation = new Simulation(cache, true);
-        } else {
-            simulation = new Simulation(cache, false);
-        }
-
-        readInputFile(inputFile, outputFlag);
-
-        for (int address : simulation.getAddresses(adressesArray)) {
-            simulation.accessAddress(address);
-        }
-
-        generateOutputFile(outputFlag);
-    }
-
-    private void readInputFile(String inputFile, boolean debugMode) throws IOException {
-        try (DataInputStream dataStream = new DataInputStream(new FileInputStream(inputFile))) {
-            while (dataStream.available() > 0) {
-                int address = dataStream.readInt();
-
-                //DEBUG
-                if (debugMode) {
-                    System.out.println("Endereço lido: " + address);
-                }
-
-                addressArray.add(address);
-            }
-        } catch (IOException e) {
-            throw new IOException("Erro ao ler o arquivo de entrada: " + e.getMessage());
-        }
-    }
-
-    private void generateOutputFile(boolean outputFlag) {
+    private void generateOutputFile(Statistics statistics, boolean outputFlag) {
         // INCOMPLETO: Implementar a geração do arquivo de saída
 
         if (outputFlag) {
