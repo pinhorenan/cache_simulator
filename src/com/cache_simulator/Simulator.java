@@ -3,13 +3,13 @@ package com.cache_simulator;
 import java.io.*;
 import java.util.*;
 
-public class Simulador {
+public class Simulator {
     private Cache cache;
-    private Simulacao simulacao;
-    private List<Integer> listaEnderecos;
+    private Simulation simulation;
+    private List<Integer> addresses;
      
-    public Simulador() {
-        listaEnderecos = new ArrayList<>();
+    public Simulator() {
+        addressArray = new ArrayList<>();
     }
     
     public static void main(String[] args) {    
@@ -21,65 +21,65 @@ public class Simulador {
         int nsets = Integer.parseInt(args[0]);
         int bsize = Integer.parseInt(args[1]);
         int assoc = Integer.parseInt(args[2]);
-        String politicaSubstituicao = args[3];
-        boolean flagSaida = args[4].equals("1");
-        String arquivoEntrada = args[5];
+        String subPolicy = args[3];
+        boolean outputFlag = args[4].equals("1");
+        String inputFile = args[5];
 
-        Simulador simulador = new Simulador();
+        Simulation simulation = new Simulator();
         
         try {
-            simulador.rodarSimulacao(nsets, bsize, assoc, politicaSubstituicao, flagSaida, arquivoEntrada);
+            simulation.runSimulation(nsets, bsize, assoc, subPolicy, outputFlag, inputFile);
         } catch (IOException e) {
             System.err.println("Erro ao processar o arquivo de entrada: " + e.getMessage());
         }
     }
 
-    private void rodarSimulacao(int nsets, int bsize, int assoc, String politicaSubstituicao, boolean flagSaida, String arquivoEntrada) throws IOException {
-        cache = new Cache(nsets, bsize, assoc, politicaSubstituicao);
+    private void runSimulation(int nsets, int bsize, int assoc, String subPolicy, boolean outputFlag, String inputFile) throws IOException {
+        cache = new Cache(nsets, bsize, assoc, subPolicy);
 
-        if (flagSaida) {
-            simulacao = new Simulacao(cache, true);
+        if (outputFlag) {
+            simulation = new Simulation(cache, true);
         } else {
-            simulacao = new Simulacao(cache, false);
+            simulation = new Simulation(cache, false);
         }
 
-        processarArquivoEntrada(arquivoEntrada, flagSaida);
+        readInputFile(inputFile, outputFlag);
 
-        for (int endereco : simulacao.getEnderecos(listaEnderecos)) {
-            simulacao.acessarEndereco(endereco);
+        for (int address : simulation.getAdressess(adressesArray)) {
+            simulation.accessAddress(address);
         }
 
-        gerarArquivoSaida(flagSaida);
+        generateOutputFile(outputFlag);
     }
 
-    private void processarArquivoEntrada(String arquivoEntrada, boolean debugMode) throws IOException {
-        try (DataInputStream dataStream = new DataInputStream(new FileInputStream(arquivoEntrada))) {
+    private void readInputFile(String inputFile, boolean debugMode) throws IOException {
+        try (DataInputStream dataStream = new DataInputStream(new FileInputStream(inputFile))) {
             while (dataStream.available() > 0) {
-                int endereco = dataStream.readInt();
+                int address = dataStream.readInt();
 
                 //DEBUG
                 if (debugMode) {
-                    System.out.println("Endereço lido: " + endereco);
+                    System.out.println("Endereço lido: " + address);
                 }
 
-                listaEnderecos.add(endereco);
+                addressArray.add(address);
             }
         } catch (IOException e) {
             throw new IOException("Erro ao ler o arquivo de entrada: " + e.getMessage());
         }
     }
 
-    private void gerarArquivoSaida(boolean flagSaida) {
+    private void generateOutputFile(boolean outputFlag) {
         // INCOMPLETO: Implementar a geração do arquivo de saída
 
-        if (flagSaida) {
-            saidaVerbosa();
+        if (outputFlag) {
+            verboseOutput();
         } else {
-            saidaSimples();
+            simpleOutput();
         }
     }
 
-    private void saidaVerbosa() {
+    private void verboseOutput() {
         System.out.println("Total de acessos: " + simulacao.getAcessos());
         System.out.println("Total de hits: " + simulacao.getHits());
         System.out.println("Total de misses: " + simulacao.getMisses());
@@ -93,7 +93,7 @@ public class Simulador {
         System.out.println("Taxa de miss conflito: " + simulacao.getTaxaMissConflito());
     }
 
-    private void saidaSimples() {
+    private void simpleOutput() {
         // A ordem deverá ser: Total de acessos, Taxa de hit, Taxa de miss, Taxa de miss compulsório, Taxa de miss de capacidade, Taxa de miss conflito.
         // Ex.: 100000, 0.95, 0.06, 0.17, 0.33, 0.50
 

@@ -1,37 +1,90 @@
 package com.cache_simulator;
 
 public class Cache {
-    private int[] cacheValidade; // Array para armazenar os bits de validade.
-    private int[] cacheTag; // Array para armazenar os bits de tag.
-    private final int nsets; // Número de conjuntos. 
-    private final int bsize; // Número de blocos.
-    private final int assoc; // Número de vias de associatividade (Se assoc=1, é mapeamento direto, se assoc=bsize, é totalmente associativo e o nsets deverá ser 1).
-    private final int numeroBitsOffset; // Número de bits para o offset.
-    private final int numeroBitsIndex; // Número de bits para o índice.
-    private final int tamanhoCache; // Tamanho da cache em bytes, calculado a partir dos valores de nsets, bsize e assoc (net * bsize * assoc).
-    private final String politicaSubstituicao; // Algoritmo de substituição (LRU, FIFO, RANDOM). Por padrão será RANDOM, a implementação do LRU e FIFO é opcional.
 
-    // Construtor
+    // Atributos Primários
+    private final int nsets; 
+    private final int bsize;
+    private final int assoc;
+    private final String subPolicy;
 
-    public Cache(int nsets, int bsize, int assoc, String politicaSubstituicao) {
+    // Atributos Derivados
+    private final int offsetLenght;
+    private final int indexLenght; 
+    private int[] valBits;
+    private int[] tagBits;
+    private LinkedList<Integer>[] queuesFIFO;
+    private LinkedList<Integer>[] arrayLRU;
+
+    // ------------------------------------ Construtor ------------------------------------ //
+
+    public Cache(int nsets, int bsize, int assoc, String subPolicy) {
         this.nsets = nsets;
         this.bsize = bsize;
         this.assoc = assoc;
-        this.politicaSubstituicao = politicaSubstituicao;
+        this.subPolicy = subPolicy;
         
         // Definição de valores derivados
 
-        this.tamanhoCache = nsets * bsize * assoc;
-        this.numeroBitsOffset = (int) (Math.log(bsize) / Math.log(2)); // log2(bsize)
-        this.numeroBitsIndex = (int) (Math.log(nsets) / Math.log(2)); // log2(nsets)
+        this.offsetLength = (int) (Math.log(bsize) / Math.log(2)); // log2(bsize)
+        this.indexLength = (int) (Math.log(nsets) / Math.log(2)); // log2(nsets)
+
+        // Inicializando a fila para FIFO
+        this.queusFIFO = new LinkedList[nsets];
+        for (int i = 0; i < nsets; i++) {
+            queuesFIFO[i] = new LinkedList<>();
+        }
+
+        // Inicializando as listas para LRU
+        this.arrayLRU = new ArrayList[nsets];
+        for (int i = 0; i < nsets; i++) {
+            arrayLRU[i] = new ArrayList<>();
+        }
 
         // Inicialização dos arrays de bits de validade e tag
+        this.valBits = new int[nsets * assoc];
+        this.tagBits = new int[nsets * assoc];
+    }
+   
 
-        this.cacheValidade = new int[nsets * assoc]; // Validade (inicialmente, todas as posições estão vazias, ou seja, são 0).
-        this.cacheTag = new int[nsets * assoc]; // Tag (inicialmente, todas as posições estão vazias, ou seja, são 0).
+    // ------------------------------------ Métodos ------------------------------------ //
+
+    // -> Políticas de Substituição
+
+    public void applyFIFO(int setIndex, int tag) {
+        // Se o conjunto já está cheio, remover o bloco mais antigo (primeiro da fila)
+        if (queuesFIFO[setIndex].size() == assoc) {
+            int blocoRemover = queusFIFO[setIndex].poll();  // Remove o bloco mais antigo
+            // Aqui você precisa remover o tag correspondente no cache (atualizar arrays de validade e tag)
+            // Exemplo: cacheTagArray[setIndex][...] = -1;
+        }
+    
+        // Adicionar o novo bloco (tag) ao final da fila
+        queuesFIFO[setIndex].add(tag);
     }
 
-    // Getters
+    public void applyLRU(int setIndex, int tag) {
+        // Se o conjunto já está cheio, remover o bloco menos recentemente utilizado (primeiro da lista)
+        if (listasLRU[setIndex].size() == assoc) {
+            int blocoRemover = listasLRU[setIndex].remove(0);  // Remove o primeiro (menos recentemente usado)
+            // Aqui você precisa remover o tag correspondente no cache (atualizar arrays de validade e tag)
+            // Exemplo: cacheTagArray[setIndex][...] = -1;
+        }
+    
+        // Adicionar o novo bloco (tag) ao final da lista
+        listasLRU[setIndex].add(tag);
+    }
+
+    public void refreshLRU(int setIndex, int tag) {
+        // Remove o bloco acessado da lista
+        arrayLRU[setIndex].remove((Integer) tag);  // Casting para garantir que é o objeto "tag"
+        
+        // Adiciona o bloco ao final da lista (agora é o mais recentemente usado)
+        arrayLRU[setIndex].add(tag);
+    }
+      
+
+    // -> Getters
 
     public int getNsets() {
         return nsets;
@@ -45,37 +98,40 @@ public class Cache {
         return assoc;
     }
 
-    public int getTamanhoCache() {
-        return tamanhoCache;
+    public String getPolicy() {
+        return subPolicy;
     }
 
-    public String getPoliticaSubsituticao() {
-        return politicaSubstituicao;
+    public int getOffset() {
+        return offsetLenght;
     }
 
-    public int getNumeroBitsOffset() {
-        return numeroBitsOffset;
-    }
-
-    public int getNumeroBitsIndex() {
-        return numeroBitsIndex;
-    }
-
-    public int getValidade(int index) {
-        return cacheValidade[index];
+    public int getIndex() {
+        return indexLenght;
     }
 
     public int getTag(int index) {
-        return cacheTag[index];
+        return tagBits[index];
+    }
+
+    public int checkValid(int index) {
+    return valBits[index];
     }
 
     // Setters
 
-    public void setValido(int index) {
-        this.cacheValidade[index] = 1;
+    public void setValid(int index) {
+        this.valBits[index] = 1;
     }
 
     public void setTag(int index, int tag) {
-        this.cacheTag[index] = tag;	
+        this.tagBits[index] = tag;	
     }
 }
+
+    // Getters Derivados
+
+    // TODO
+    public int getCacheSize() {
+        return null;
+    }
