@@ -5,7 +5,7 @@
             "type": "java",
             "name": "Simulação Detalhada",
             "request": "launch",
-            "mainClass": "com.cache_simulator.Simulador",
+            "mainClass": "com.cache_simulator.Simulator",
             "projectName": "cache_simulator_67781d32",
             "args": [
                 "256", "4", "1", "RANDOM", "1", "utils\\Endereços\\bin_100.bin"
@@ -16,7 +16,7 @@
             "type": "java",
             "name": "Simulação Simples",
             "request": "launch",
-            "mainClass": "com.cache_simulator.Simulador",
+            "mainClass": "com.cache_simulator.Simulator",
             "projectName": "cache_simulator_67781d32",
             "args": [
                 "256", "4", "1", "RANDOM", "0", "utils\\Endereços\\bin_100.bin"

@@ -1,7 +1,9 @@
-package com.cache_simulator;
+package br.edu.ufpel.cachesimulator.simulation;
 
 import java.io.*;
 import java.util.*;
+
+import br.edu.ufpel.cachesimulator.model.Cache;
 
 public class Simulator {
     private Cache cache;
@@ -12,7 +14,10 @@ public class Simulator {
         addressArray = new ArrayList<>();
     }
     
-    public static void main(String[] args) {    
+    public static void main(String[] args) {
+
+        Simulator simulator = new Simulator();
+
         if (args.length < 6) {
             System.out.println("Uso: cache_simulator <nsets> <bsize> <assoc> <substitutionPolicy> <flag_saida> <inputFile>");
             return;
@@ -25,7 +30,6 @@ public class Simulator {
         boolean outputFlag = args[4].equals("1");
         String inputFile = args[5];
 
-        Simulation simulation = new Simulator();
         
         try {
             simulation.runSimulation(nsets, bsize, assoc, subPolicy, outputFlag, inputFile);
@@ -45,7 +49,7 @@ public class Simulator {
 
         readInputFile(inputFile, outputFlag);
 
-        for (int address : simulation.getAdressess(adressesArray)) {
+        for (int address : simulation.getAddresses(adressesArray)) {
             simulation.accessAddress(address);
         }
 
