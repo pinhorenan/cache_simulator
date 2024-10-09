@@ -7,6 +7,7 @@ import br.edu.ufpel.cache_simulator.controller.*;
 
 public class Simulation {
     private final Cache cache;
+    private final CacheController cacheController;
     private final List<Integer> addresses;
     private final Statistics statistics;
     
@@ -14,6 +15,7 @@ public class Simulation {
         this.cache = cache;
         this.addresses = addresses;
         this.statistics = new Statistics();
+        this.cacheController = new CacheController(cache, statistics);
     }
 
     public Statistics getStatistics() {
@@ -30,7 +32,7 @@ public class Simulation {
 
     public void runSimulation() {
         for (int address : addresses) {
-            CacheController.accessAddress(address);
+            cacheController.accessAddress(address);
         }
     }
 }

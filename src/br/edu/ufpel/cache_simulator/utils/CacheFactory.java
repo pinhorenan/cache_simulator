@@ -9,13 +9,13 @@ public class CacheFactory {
         ReplacementPolicy policy;
         switch (config.getReplacementPolicy()) {
             case "fifo":
-                policy = new FIFOPolicy();
+                policy = new FIFOReplacement();
                 break;
             case "lru":
-                policy = new LRUPolicy();
+                policy = new LRUReplacement();
                 break;
             case "r":
-                policy = new RandomPolicy();
+                policy = new RandomReplacement();
                 break;
             default:
                 throw new IllegalArgumentException("Política de substituição inválida");

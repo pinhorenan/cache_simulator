@@ -13,26 +13,42 @@ public class Set {
     public Set(int bsize, int assoc, ReplacementPolicy policy) {
         this.replacementPolicy = policy;
 
-        // Inicializa o array de blocos com o tamanho da associatividade e preenche com blocos vazios de tamanho bsize
         blocks = new ArrayList<>(assoc);
         for (int i = 0; i < assoc; i++) {
             blocks.add(new Block(bsize));
         }
     }
 
-    public Object getReplacementPolicy() {
+    public List<Block> getBlocks() {
+        return blocks;
+    }
+    
+    public ReplacementPolicy getReplacementPolicy() {
         return replacementPolicy;
     }
 
-    // getBlock() retorna o bloco no índice passado
-    public Block getBlock(int index) {
-        return blocks.get(index);
+    public boolean accessBlock(int tag) {
+        for (Block block : blocks) {
+            if (block.isValid() && block.getTag() == tag) {
+                return true; // Hit
+            }
+        }
+        return false; // Miss
     }
 
-    // checkTag() verifica se a tag do bloco é igual à tag passada
-    public boolean checkTag(Block block, int tag) {
-        if (block.isValid() && block.getTag() == tag) {
-            return true;
-        } else return false;
+    public void replaceBlock(int tag) {
+        // Aqui você pode implementar a lógica de substituição
+        // Por exemplo, substituir o primeiro bloco inválido ou aplicar alguma política (LRU, FIFO, etc.)
+        for (Block block : blocks) {
+            if (!block.isValid()) {
+                block.setTag(tag);
+                block.setValid();
+                return;  // Substituição concluída
+            }
+        }
+
+        // Se todos os blocos forem válidos, você pode substituir um bloco com base em sua política
+        // Exemplo simples: substitui o primeiro bloco
+        blocks.get(0).setTag(tag);  // Substitui o primeiro bloco (você pode melhorar essa lógica)
     }
 }

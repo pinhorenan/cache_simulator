@@ -6,17 +6,16 @@ import java.util.Queue;
 
 import br.edu.ufpel.cache_simulator.model.Block;
 
-public class FIFOPolicy implements ReplacementPolicy {
+public class FIFOReplacement implements ReplacementPolicy {
     private Queue<Block> fifoQueue = new LinkedList<>();
 
     @Override
     public Block selectBlockToReplace(List<Block> blocks) {
-        return fifoQueue.poll();  // Remove e retorna o bloco mais antigo
+        return fifoQueue.poll();
     }
 
     @Override
     public void update(Block block) {
-        fifoQueue.add(block);  // Adiciona o novo bloco ao final da fila
+        fifoQueue.add(block);
     }
 }
-
