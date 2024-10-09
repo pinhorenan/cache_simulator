@@ -7,7 +7,7 @@ import br.edu.ufpel.cachesimulator.policies.*;
 public class CacheFactory {
     public static Cache createCache(Configuration config) {
         ReplacementPolicy policy;
-        switch (config.getPolicy()) {
+        switch (config.getReplacementPolicy()) {
             case "fifo":
                 policy = new FIFOPolicy();
                 break;

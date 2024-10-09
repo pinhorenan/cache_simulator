@@ -3,13 +3,12 @@ package br.edu.ufpel.cachesimulator.simulation;
 import java.io.*;
 
 import br.edu.ufpel.cachesimulator.config.Configuration;
-import br.edu.ufpel.cachesimulator.config.FileHandler;
 import br.edu.ufpel.cachesimulator.controller.CacheFactory;
 import br.edu.ufpel.cachesimulator.model.Cache;
 
 public class Simulator {
     
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
 
         // Mensagem para "bad args"
         if (args.length < 6) {
@@ -25,23 +24,27 @@ public class Simulator {
         boolean outputFlag = args[4].equals("1");
         String inputFile = args[5];
 
-        // Instanceamento do FileHandler
-        FileHandler fileHandler = new FileHandler();
-
-        // Instanceamento de configuration com os argumentos recebidos
+        // Inicializa uma de configuração
         Configuration configuration = new Configuration(nsets, bsize, assoc, subPolicy);
 
-        // Nova instância de Cache utilizando Configuration
+        // Cria uma Cache de acordo com a configuração
         Cache cache = CacheFactory.createCache(configuration);
 
-        // Nova instância de Simulation utilizando a Cache instanciada
-        Simulation simulation = new Simulation(cache);
-        
-        // Tentativa de rodar a simulação.
-        try {
-            fileHandler.writeOutputToFile(simulation.runSimulation(cache, inputFile), outputFlag);
-        } catch (IOException e) {
-            System.err.println("Erro ao processar o arquivo de entrada: " + e.getMessage());
+        // Cria uma Simulação com a Cache
+        Simulation simulation = new Simulation(cache, inputFile);
+
+        // Roda a simulação
+        simulation.runSimulation();
+
+        Statistics results = simulation.getStatistics();
+
+        if(outputFlag) {
+            results.getTotalAcesses();
+            results.getTotalHits();
+            results.getTotalMisses();
+
+            // WIP
         }
-    }  
+
+    }
 }

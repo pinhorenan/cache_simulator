@@ -10,11 +10,7 @@ import br.edu.ufpel.cachesimulator.simulation.Statistics;
 
 public class FileHandler {
 
-    public FileHandler() {
-
-    }
-
-    public List<Integer> readAddressesFromFile(String inputFile) throws IOException {
+    public static List<Integer> readAddressesFromFile(String inputFile) throws IOException {
         List<Integer> addresses = new ArrayList<>();
         try (DataInputStream dataStream = new DataInputStream(new FileInputStream(inputFile))) {
             while (dataStream.available() > 0) {
@@ -30,7 +26,7 @@ public class FileHandler {
         // wip
     }
 
-    public void writeOutputToFile(Statistics statistics, boolean verbose) {
+    public static void writeOutputToFile(Statistics statistics, boolean verbose) {
         return;
     }
     

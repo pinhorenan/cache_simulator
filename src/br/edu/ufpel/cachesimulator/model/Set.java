@@ -17,21 +17,24 @@ public class Set {
         }
         this.replacementPolicy = policy;
     }
-    
+
     // Métodos de acesso
-    public void accessBlock(int tag) {
+    public boolean accessBlock(int tag) {
         Block block = findBlockByTag(tag);
         if (block != null) {
             // Cache hit
-            replacementPolicy.update(block);
+            replacementPolicy.update(block);  // Atualiza política de substituição
+            return true;  // Hit
         } else {
             // Cache miss, substitui um bloco
             Block blockToReplace = replacementPolicy.selectBlockToReplace(blocks);
             blockToReplace.setTag(tag);
             blockToReplace.setValid();
-            replacementPolicy.update(blockToReplace);
+            replacementPolicy.update(blockToReplace);  // Atualiza política de substituição
+            return false;  // Miss
         }
     }
+    
 
     private Block findBlockByTag(int tag) {
         for (Block block : blocks) {

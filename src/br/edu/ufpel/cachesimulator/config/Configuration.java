@@ -6,8 +6,6 @@ public class Configuration {
     private int assoc;
     private String policy;
 
-    // Métodos de acesso...
-
     public Configuration(int nsets, int bsize, int assoc, String policy) {
         this.nsets = nsets;
         this.bsize = bsize;
@@ -29,7 +27,7 @@ public class Configuration {
         return assoc;
     }
 
-    public String getPolicy() {
+    public String getReplacementPolicy() {
         return policy;
     }
 }

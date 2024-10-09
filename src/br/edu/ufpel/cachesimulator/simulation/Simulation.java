@@ -10,28 +10,33 @@ import br.edu.ufpel.cachesimulator.model.Set;
 
 public class Simulation {
     private final Cache cache;
+    private final String inputFile;
+    private Statistics statistics;
     
     // Construtor
 
-    public Simulation(Cache cache) {
+    public Simulation(Cache cache, String inputFile) {
         this.cache = cache;
+        this.inputFile = inputFile;
+        statistics = new Statistics();
     }
 
-    public Statistics runSimulation(Cache cache, String inputFile) throws IOException {
-        Statistics statistics = new Statistics();
+    public void runSimulation() throws IOException {
 
-        FileHandler addressReader = new FileHandler();
-
-        List<Integer> addressesArray = addressReader.readAddressesFromFile(inputFile);
+        List<Integer> addressesArray = FileHandler.readAddressesFromFile(inputFile);
 
         for (int address : getAddresses(addressesArray)) {
             accessAddress(address);
         }
 
-        return statistics;
+        return;
     }
 
     // Métodos
+
+    public Statistics getStatistics() {
+        return statistics;
+    }
 
     public List<Integer> getAddresses(List<Integer> addresses) {
         return addresses;
@@ -45,25 +50,17 @@ public class Simulation {
         int index = (address >> offset) & ((1 << indexLength) - 1);
         
         Set set = cache.getSet(index);
-        boolean hit = false;
     
-        for (Block block : set.getBlocks()) {
-            if (block.isValid() && block.getTag() == tag) {
-                hit = true;
-                // Atualiza o LRU se necessário
-                if (cache.getPolicy().equals("LRU")) {
-                    set.applyReplacementPolicy(tag);
-                }
-                break;
-            }
+        if (set.accessBlock(tag)) {  // Delega o acesso ao Set
+            statistics.incrementsHit();
+        } else {
+            statistics.incrementMiss();  // Você também pode ter um método para incrementar os misses
         }
-    
         if (!hit) {
-            // Caso de miss - aplicar a política de substituição
-            set.applyReplacementPolicy(tag);
+        // Caso de miss - aplicar a política de substituição
+        set.applyReplacementPolicy(tag);
         }
-    
-        // Incrementa contadores de hit/miss
-    }
 
+    // Incrementa contadores de hit/miss
+    }
 }

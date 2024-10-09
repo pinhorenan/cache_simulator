@@ -1,87 +1,93 @@
 package br.edu.ufpel.cachesimulator.simulation;
 
 public class Statistics {
-    private int totalAcesses;
+    private int totalAccesses;
     private int totalHits;
     private int compulsoryMisses;
-    private int capacityMisses;
     private int conflictMisses;
+    private int capacityMisses;
 
     public Statistics() {
-        this.totalAcesses = 0;
         this.totalHits = 0;
+        this.totalAccesses = 0;
         this.compulsoryMisses = 0;
-        this.capacityMisses = 0;
         this.conflictMisses = 0;
+        this.capacityMisses = 0;
     }
 
-    // Incrementadores
-
-    public void incrementsCompulsoryMiss() {
-        this.compulsoryMisses++;
-    }
-
-    public void incrementsCapacityMiss() {
-        this.capacityMisses++;
-    }
-    
-    public void incrementsConflictMiss() {
-        this.conflictMisses++;
-    }
-
+    // Métodos para incrementar hits e misses
     public void incrementsHit() {
-        this.totalHits++;
+        totalHits++;
     }
 
-    public void incrementsAccess() {
-        this.totalAcesses++;
+    public void incrementCompulsoryMiss() {
+        compulsoryMisses++;
     }
 
-    // Getters
-
-    public int getTotalAcesses() {
-        return totalAcesses;
+    public void incrementConflictMiss() {
+        conflictMisses++;
     }
 
+    public void incrementCapacityMiss() {
+        capacityMisses++;
+    }
+
+    // Getters para acessar os valores
     public int getTotalHits() {
         return totalHits;
     }
 
+    public int getTotalAcesses() {
+        return totalAccesses;
+    }   
+
     public int getTotalMisses() {
-        return (compulsoryMisses + capacityMisses + conflictMisses);
+        return compulsoryMisses + conflictMisses + capacityMisses;
     }
 
     public int getCompulsoryMisses() {
         return compulsoryMisses;
     }
 
+    public int getConflictMisses() {
+        return conflictMisses;
+    }
+
     public int getCapacityMisses() {
         return capacityMisses;
     }
 
-    public int getConflitMisses() {
-        return conflictMisses;
-    }
 
-    // Rate Getters
-
+    // Métodos para calcular taxas
     public double getHitRate() {
-        return (double) totalHits / (totalAcesses);
+        return (double) totalHits / totalAccesses;
     }
 
     public double getMissRate() {
-        return (double) getTotalMisses() / (totalAcesses);
+        return (double) getTotalMisses() / totalAccesses;
     }
 
     public double getCompulsoryMissRate() {
-        return (double) compulsoryMisses / (getTotalMisses());
-    }
-
-    public double getCapacityMissRate() {
-        return (double) capacityMisses / (getTotalMisses());
+        return (double) compulsoryMisses / getTotalMisses();
     }
 
     public double getConflictMissRate() {
-        return (double) conflictMisses / (getTotalMisses());
+        return (double) conflictMisses / getTotalMisses();
+    }
+
+    public double getCapacityMissRate() {;
+        return (double) capacityMisses / getTotalMisses();
+    }
+
+    // Método para exibir as estatísticas
+    public void printStatistics() {
+        System.out.println("Total Accesses: " + totalAccesses);
+        System.out.println("Hits: " + totalHits);
+        System.out.println("Total Misses: " + getTotalMisses());
+        System.out.println("Compulsory Misses: " + compulsoryMisses);
+        System.out.println("Conflict Misses: " + conflictMisses);
+        System.out.println("Capacity Misses: " + capacityMisses);
+        System.out.println("Hit Rate: " + getHitRate());
+        System.out.println("Miss Rate: " + getMissRate());
     }
 }
