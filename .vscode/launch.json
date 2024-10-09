@@ -3,24 +3,46 @@
     "configurations": [
         {
             "type": "java",
-            "name": "Simulação Detalhada",
+            "name": "bin_100",
             "request": "launch",
             "mainClass": "br.edu.ufpel.cache_simulator.Simulator",
             "projectName": "cache_simulator_67781d32",
             "args": [
-                "256", "4", "1", "r", "1", "samples\\bin_100.bin"
+                "256", "4", "1", "r", "0", "src\\br\\edu\\ufpel\\cache_simulator\\tests\\samples\\bin_100.bin"
             ]
         },
 
         {
             "type": "java",
-            "name": "Simulação Simples",
+            "name": "bin_1000",
             "request": "launch",
             "mainClass": "br.edu.ufpel.cache_simulator.Simulator",
             "projectName": "cache_simulator_67781d32",
             "args": [
-                "256", "4", "1", "r", "0", "samples\\bin_100.bin"
+                "256", "4", "1", "r", "0", "src\\br\\edu\\ufpel\\cache_simulator\\tests\\samples\\bin_1000.bin"
             ]
-        }
+        },
+
+        {
+            "type": "java",
+            "name": "bin_10000",
+            "request": "launch",
+            "mainClass": "br.edu.ufpel.cache_simulator.Simulator",
+            "projectName": "cache_simulator_67781d32",
+            "args": [
+                "256", "4", "1", "r", "0", "src\\br\\edu\\ufpel\\cache_simulator\\tests\\samples\\bin_10000.bin"
+            ]
+        },
+
+        {
+            "type": "java",
+            "name": "vortex.in.sem.persons",
+            "request": "launch",
+            "mainClass": "br.edu.ufpel.cache_simulator.Simulator",
+            "projectName": "cache_simulator_67781d32",
+            "args": [
+                "256", "4", "1", "r", "0", "src\\br\\edu\\ufpel\\cache_simulator\\tests\\samples\\vortex.in.sem.persons.bin"
+            ]
+        },
     ]
 }

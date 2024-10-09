@@ -35,7 +35,6 @@ public class Statistics {
         capacityMisses++;
     }
 
-    // Getters para acessar os valores
     public int getTotalHits() {
         return totalHits;
     }
@@ -82,15 +81,8 @@ public class Statistics {
         return (double) capacityMisses / getTotalMisses();
     }
 
-    // Método para exibir as estatísticas
+    // Imprime as estatísticas seguindo o padrão especificado quando flag_saída = 1
     public void printStatistics() {
-        System.out.println("Accesses: " + totalAccesses);
-        System.out.println("Hits: " + totalHits);
-        System.out.println("Total Misses: " + getTotalMisses());
-        System.out.println("Compulsory Misses: " + compulsoryMisses);
-        System.out.println("Conflict Misses: " + conflictMisses);
-        System.out.println("Capacity Misses: " + capacityMisses);
-        System.out.println("Hit Rate: " + getHitRate());
-        System.out.println("Miss Rate: " + getMissRate());
+        System.out.println(totalAccesses + getHitRate() + getMissRate() + getCompulsoryMissRate() + getCapacityMissRate() + getConflictMissRate());
     }
 }

@@ -38,4 +38,9 @@ public class RandomReplacement implements ReplacementPolicy {
         }
     }
 
+    @Override
+    public String getName() {
+        return "RANDOM";
+    }
+
 }

@@ -7,9 +7,18 @@ public class Cache {
     private final int indexBits;
     private final Set[] sets;
     private final int cacheSize;
+    private final int associativity;
+    private final int blockSize;
+    private final int nsets;
+    private final ReplacementPolicy policy;
 
     // Construtor
     public Cache(int nsets, int bsize, int assoc, ReplacementPolicy policy) {
+        
+        this.nsets = nsets;
+        this.blockSize = bsize;
+        this.associativity = assoc;
+        this.policy = policy;
 
         // Inicializa e preenche o array de conjuntos da cache
         sets = new Set[nsets];
@@ -26,6 +35,22 @@ public class Cache {
     }
 
     // Getters
+
+    public int getAssociativity() {
+        return associativity;
+    }
+
+    public int getBlockSize() {
+        return blockSize;
+    }
+
+    public int getNsets() {
+        return nsets;
+    }
+
+    public ReplacementPolicy getPolicy() {
+        return policy;
+    }
 
     public int getCacheSize() {
         return cacheSize;

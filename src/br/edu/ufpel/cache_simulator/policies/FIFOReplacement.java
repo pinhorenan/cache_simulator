@@ -18,4 +18,10 @@ public class FIFOReplacement implements ReplacementPolicy {
     public void update(Block block) {
         fifoQueue.add(block);
     }
+
+    @Override
+    public String getName() {
+        return "FIFO";
+    }
+
 }

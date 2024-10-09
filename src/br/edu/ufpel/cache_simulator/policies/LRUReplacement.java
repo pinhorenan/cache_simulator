@@ -24,4 +24,10 @@ public class LRUReplacement implements ReplacementPolicy {
         // Reinsere o bloco no final da lista (mais recentemente usado)
         lruList.add(block);
     }
+
+    @Override
+    public String getName() {
+        return "LRU";
+    }
+
 }
