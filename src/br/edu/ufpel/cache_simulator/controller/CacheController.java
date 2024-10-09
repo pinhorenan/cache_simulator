@@ -1,7 +1,7 @@
 package br.edu.ufpel.cache_simulator.controller;
 
+import br.edu.ufpel.cache_simulator.logging.Statistics;
 import br.edu.ufpel.cache_simulator.model.*; 
-import br.edu.ufpel.cache_simulator.simulation.*;
 
 
 public class CacheController {

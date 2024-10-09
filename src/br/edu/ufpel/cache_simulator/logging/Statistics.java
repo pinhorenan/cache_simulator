@@ -1,4 +1,4 @@
-package br.edu.ufpel.cache_simulator.simulation;
+package br.edu.ufpel.cache_simulator.logging;
 
 public class Statistics {
     private int totalAccesses;
@@ -59,8 +59,6 @@ public class Statistics {
         return capacityMisses;
     }
 
-
-    // Métodos para calcular taxas
     public double getHitRate() {
         return (double) totalHits / totalAccesses;
     }
@@ -81,8 +79,24 @@ public class Statistics {
         return (double) capacityMisses / getTotalMisses();
     }
 
-    // Imprime as estatísticas seguindo o padrão especificado quando flag_saída = 1
-    public void printStatistics() {
-        System.out.println(totalAccesses + getHitRate() + getMissRate() + getCompulsoryMissRate() + getCapacityMissRate() + getConflictMissRate());
+    // Exibição livre
+    public void printVerboseResults() {
+        System.out.println("Results:");
+        System.out.println("Total accesses: " + getTotalAccesses());
+        System.out.println("Hits: " + getTotalHits());
+        System.out.println("Misses: " + getTotalMisses());
+        System.out.println("Compulsory Misses: " + getCompulsoryMisses());
+        System.out.println("Conflict Misses: " + getConflictMisses());
+        System.out.println("Capacity Misses: " + getCapacityMisses());
+        System.out.println("Hit Rate: " + getHitRate());
+        System.out.println("Miss Rate: " + getMissRate());
+        System.out.println("Compulsory Miss Rate: " + getCompulsoryMissRate());
+        System.out.println("Conflict Miss Rate: " + getConflictMissRate());
+        System.out.println("Capacity Miss Rate: " + getCapacityMissRate());    
+    }
+
+    // Exibição de acordo com o especificado no enunciado 
+    public void printConciseResults() {
+        System.out.println(getTotalAccesses() + getHitRate() +  getMissRate() + getCompulsoryMissRate() + getCapacityMissRate() + getConflictMissRate());
     }
 }

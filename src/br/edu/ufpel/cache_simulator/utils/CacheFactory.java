@@ -1,8 +1,8 @@
 package br.edu.ufpel.cache_simulator.utils;
 
+import br.edu.ufpel.cache_simulator.interfaces.*;
 import br.edu.ufpel.cache_simulator.config.Configuration;
 import br.edu.ufpel.cache_simulator.model.Cache;
-import br.edu.ufpel.cache_simulator.policies.*;
 
 public class CacheFactory {
     public static Cache createCache(Configuration config) {

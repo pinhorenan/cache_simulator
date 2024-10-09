@@ -6,9 +6,9 @@ import java.util.Map;
 
 import br.edu.ufpel.cache_simulator.config.Configuration;
 import br.edu.ufpel.cache_simulator.controller.InputOutputController;
+import br.edu.ufpel.cache_simulator.controller.Simulation;
+import br.edu.ufpel.cache_simulator.logging.Statistics;
 import br.edu.ufpel.cache_simulator.model.Cache;
-import br.edu.ufpel.cache_simulator.simulation.Simulation;
-import br.edu.ufpel.cache_simulator.simulation.Statistics;
 import br.edu.ufpel.cache_simulator.utils.CacheFactory;
 
 public class Simulator {
@@ -54,43 +54,21 @@ public class Simulator {
         // Leitura dos endereços do arquivo
         List<Integer> addresses = InputOutputController.readAddressesFromFile(inputFile);
 
-        Configuration configuration = new Configuration(nsets, bsize, assoc, subPolicy); // Por enquanto, está sempre com verbosidade 0.
-
+        Configuration configuration = new Configuration(nsets, bsize, assoc, subPolicy);
         Cache cache = CacheFactory.createCache(configuration);
 
         Simulation simulation = new Simulation(cache, addresses);
 
         // Roda a simulação
         simulation.runSimulation();
-
+        
         Statistics results = simulation.getStatistics();
 
         if(outputFlag) {
-            results.printStatistics();
+            results.printConciseResults();
         } else {
-            System.out.println("Cache Simulator");
-            System.out.println();
-            System.out.println("Configuration:");
-            System.out.println("Cache Size: " + cache.getCacheSize());
-            System.out.println("Number of Sets: " + cache.getNsets());
-            System.out.println("Associativity: " + cache.getAssociativity());
-            System.out.println("Block Size: " + cache.getBlockSize());
-            System.out.println("Substitution Policy: " + cache.getPolicy().getName());
-            System.out.println();
-            System.out.println("Results:");
-            System.out.println("Total accesses: " + results.getTotalAccesses());
-            System.out.println("Hits: " + results.getTotalHits());
-            System.out.println("Misses: " + results.getTotalMisses());
-            System.out.println("Compulsory Misses: " + results.getCompulsoryMisses());
-            System.out.println("Conflict Misses: " + results.getConflictMisses());
-            System.out.println("Capacity Misses: " + results.getCapacityMisses());
-            System.out.println("Hit Rate: " + results.getHitRate());
-            System.out.println("Miss Rate: " + results.getMissRate());
-            System.out.println("Compulsory Miss Rate: " + results.getCompulsoryMissRate());
-            System.out.println("Conflict Miss Rate: " + results.getConflictMissRate());
-            System.out.println("Capacity Miss Rate: " + results.getCapacityMissRate());
-            
-
+            results.printVerboseResults();
         }
     }
 }
+

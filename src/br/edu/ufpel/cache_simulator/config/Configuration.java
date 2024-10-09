@@ -4,27 +4,22 @@ public class Configuration {
     private int nsets;
     private int bsize;
     private int assoc;
-    private int verbosity;
     private String policy;
 
 
     // Construtor completo
-    public Configuration(int nsets, int bsize, int assoc, String policy, int verbosity) {
+    public Configuration(int nsets, int bsize, int assoc, String policy) {
         this.nsets = nsets;
         this.bsize = bsize;
         this.assoc = assoc;
         this.policy = policy;
-        this.verbosity = verbosity;
-    }
-    
-    // Construtor sem verbosity
-    public Configuration(int nsets, int bsize, int assoc, String policy) {
-        this(nsets, bsize, assoc, policy, 0);
     }
 
-    // Construtor default (0, 0, 0, "r", 0)
     public Configuration() {
-        this(0, 0, 0, "r", 0);
+        this.nsets = 0;
+        this.bsize = 0;
+        this.assoc = 0;
+        this.policy = "";
     }
 
     // Getters
@@ -39,10 +34,6 @@ public class Configuration {
 
     public int getAssociativity() {
         return assoc;
-    }
-
-    public int getVerbosity() {
-        return verbosity;
     }
 
     public String getReplacementPolicy() {

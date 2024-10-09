@@ -1,6 +1,6 @@
 package br.edu.ufpel.cache_simulator.model;
 
-import br.edu.ufpel.cache_simulator.policies.ReplacementPolicy;
+import br.edu.ufpel.cache_simulator.interfaces.ReplacementPolicy;
 
 public class Cache {
     private final int offsetBits;

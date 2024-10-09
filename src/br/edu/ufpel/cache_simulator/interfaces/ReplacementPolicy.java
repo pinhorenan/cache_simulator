@@ -1,4 +1,4 @@
-package br.edu.ufpel.cache_simulator.policies;
+package br.edu.ufpel.cache_simulator.interfaces;
 
 import java.util.List;
 
