@@ -1,35 +1,46 @@
 package br.edu.ufpel.cache_simulator.model;
 
 import br.edu.ufpel.cache_simulator.policies.ReplacementPolicy;
-import br.edu.ufpel.cache_simulator.simulation.Statistics;
 
 public class Cache {
+    private final int offsetBits;
+    private final int indexBits;
     private final Set[] sets;
-    private final int offset;
-    private final int indexLength;
-    private final Statistics statistics = new Statistics();  // Instância de Statistics
+    private final int cacheSize;
 
-    // Construtores
-    public Cache(int nsets, int bsize, int assoc, ReplacementPolicy subPolicy) {
+    // Construtor
+    public Cache(int nsets, int bsize, int assoc, ReplacementPolicy policy) {
+
+        // Inicializa e preenche o array de conjuntos da cache
         sets = new Set[nsets];
         for (int i = 0; i < nsets; i++) {
-            sets[i] = new Set(assoc, subPolicy, statistics);  // Passa a instância de Statistics para cada conjunto
+            sets[i] = new Set(bsize, assoc, policy);
         }
 
-        this.offset = (int) (Math.log(bsize) / Math.log(2));  // Offset baseado no tamanho do bloco
-        this.indexLength = (int) (Math.log(nsets) / Math.log(2));  // Index baseado no número de conjuntos
+        // Calcula o número de bits para offset e índice
+        offsetBits = (int) (Math.log(bsize) / Math.log(2));
+        indexBits = (int) (Math.log(nsets) / Math.log(2));
+
+        // Calcula o tamanho da cache
+        cacheSize = nsets * assoc * bsize;
     }
 
     // Getters
-    public Set getSet(int index) {
-        return sets[index];
+
+    public int getCacheSize() {
+        return cacheSize;
+    }
+    
+    public Set getSet(int setIndex) {
+        return sets[setIndex];
     }
 
-    public int getOffset() {
-        return offset;
+    public int getOffsetBits() {
+        return offsetBits;
     }
 
-    public int getIndex() {
-        return indexLength;
+    public int getIndexBits() {
+        return indexBits;
     }
+
 }

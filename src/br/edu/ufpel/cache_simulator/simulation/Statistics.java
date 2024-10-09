@@ -15,18 +15,18 @@ public class Statistics {
         this.capacityMisses = 0;
     }
 
-    public void incrementAccesses() {
+    public void incrementAccess() {
         totalAccesses++;
     }
 
-    public void incrementsHit() {
+    public void incrementHit() {
         totalHits++;
     }
 
     public void incrementCompulsoryMiss() {
         compulsoryMisses++;
     }
-    
+
     public void incrementConflictMiss() {
         conflictMisses++;
     }
