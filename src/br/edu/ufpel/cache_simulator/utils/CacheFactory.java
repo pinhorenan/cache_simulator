@@ -1,4 +1,4 @@
-package br.edu.ufpel.cache_simulator.controller;
+package br.edu.ufpel.cache_simulator.utils;
 
 import br.edu.ufpel.cache_simulator.config.Configuration;
 import br.edu.ufpel.cache_simulator.model.Cache;

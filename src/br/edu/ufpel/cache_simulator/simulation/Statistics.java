@@ -40,7 +40,7 @@ public class Statistics {
         return totalHits;
     }
 
-    public int getTotalAcesses() {
+    public int getTotalAccesses() {
         return totalAccesses;
     }   
 

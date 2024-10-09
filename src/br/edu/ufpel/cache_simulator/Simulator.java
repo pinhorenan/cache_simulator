@@ -1,12 +1,14 @@
 package br.edu.ufpel.cache_simulator;
 
 import java.io.*;
+import java.util.List;
 
 import br.edu.ufpel.cache_simulator.config.Configuration;
-import br.edu.ufpel.cache_simulator.controller.CacheFactory;
+import br.edu.ufpel.cache_simulator.controller.InputOutputController;
 import br.edu.ufpel.cache_simulator.model.Cache;
 import br.edu.ufpel.cache_simulator.simulation.Simulation;
 import br.edu.ufpel.cache_simulator.simulation.Statistics;
+import br.edu.ufpel.cache_simulator.utils.CacheFactory;
 
 public class Simulator {
     
@@ -26,14 +28,14 @@ public class Simulator {
         boolean outputFlag = args[4].equals("1");
         String inputFile = args[5];
 
-        // Inicializa uma de configuração
-        Configuration configuration = new Configuration(nsets, bsize, assoc, subPolicy);
+        // Leitura dos endereços do arquivo
+        List<Integer> addresses = InputOutputController.readAddressesFromFile(inputFile);
 
-        // Cria uma Cache de acordo com a configuração
+        Configuration configuration = new Configuration(nsets, bsize, assoc, subPolicy); // Por enquanto, está sempre com verbosidade 0.
+
         Cache cache = CacheFactory.createCache(configuration);
 
-        // Cria uma Simulação com a Cache
-        Simulation simulation = new Simulation(cache, inputFile);
+        Simulation simulation = new Simulation(cache, addresses);
 
         // Roda a simulação
         simulation.runSimulation();
@@ -41,12 +43,18 @@ public class Simulator {
         Statistics results = simulation.getStatistics();
 
         if(outputFlag) {
-            results.getTotalAcesses();
-            results.getTotalHits();
-            results.getTotalMisses();
-
-            // WIP
-        }
-
+            System.out.println("Cache Size: " + cache.getCacheSize());
+            System.out.println("Number of Sets: " + nsets);
+            System.out.println("Associativity: " + assoc);
+            System.out.println("Block Size: " + bsize);
+            System.out.println("Substitution Policy: " + subPolicy);
+            System.out.println("Total accesses: " + results.getTotalAccesses());
+            System.out.println("Hits: " + results.getTotalHits());
+            System.out.println("Compulsory Misses: " + results.getCompulsoryMisses());
+            System.out.println("Conflict Misses: " + results.getConflictMisses());
+            System.out.println("Capacity Misses: " + results.getCapacityMisses());
+            System.out.println("Hit Rate: " + results.getHitRate());
+            System.out.println("Miss Rate: " + results.getMissRate());
+        } else results.printStatistics();
     }
 }
