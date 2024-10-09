@@ -1,4 +1,4 @@
-package br.edu.ufpel.cachesimulator.logging;
+package br.edu.ufpel.cache_simulator.logging;
 
 public class Logger {
     private boolean verbose;

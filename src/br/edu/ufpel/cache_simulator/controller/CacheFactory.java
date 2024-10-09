@@ -1,8 +1,8 @@
-package br.edu.ufpel.cachesimulator.controller;
+package br.edu.ufpel.cache_simulator.controller;
 
-import br.edu.ufpel.cachesimulator.config.Configuration;
-import br.edu.ufpel.cachesimulator.model.Cache;
-import br.edu.ufpel.cachesimulator.policies.*;
+import br.edu.ufpel.cache_simulator.config.Configuration;
+import br.edu.ufpel.cache_simulator.model.Cache;
+import br.edu.ufpel.cache_simulator.policies.*;
 
 public class CacheFactory {
     public static Cache createCache(Configuration config) {
@@ -15,7 +15,8 @@ public class CacheFactory {
                 policy = new LRUPolicy();
                 break;
             case "r":
-                policy = new RANDOMPolicy();
+                policy = new RandomPolicy();
+                break;
             default:
                 throw new IllegalArgumentException("Política de substituição inválida");
         }

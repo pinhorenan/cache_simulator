@@ -1,4 +1,4 @@
-package br.edu.ufpel.cachesimulator.config;
+package br.edu.ufpel.cache_simulator.config;
 
 import java.io.DataInputStream;
 import java.io.FileInputStream;
@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import br.edu.ufpel.cachesimulator.simulation.Statistics;
+import br.edu.ufpel.cache_simulator.simulation.Statistics;
 
 public class FileHandler {
 

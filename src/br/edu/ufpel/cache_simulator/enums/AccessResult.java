@@ -1,4 +1,4 @@
-package br.edu.ufpel.cachesimulator.enums;
+package br.edu.ufpel.cache_simulator.enums;
 
 public enum AccessResult {
     HIT,

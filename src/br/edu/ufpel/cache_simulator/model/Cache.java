@@ -1,7 +1,7 @@
-package br.edu.ufpel.cachesimulator.model;
+package br.edu.ufpel.cache_simulator.model;
 
-import br.edu.ufpel.cachesimulator.policies.ReplacementPolicy;
-import br.edu.ufpel.cachesimulator.simulation.Statistics;
+import br.edu.ufpel.cache_simulator.policies.ReplacementPolicy;
+import br.edu.ufpel.cache_simulator.simulation.Statistics;
 
 public class Cache {
     private final Set[] sets;

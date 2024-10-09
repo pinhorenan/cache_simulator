@@ -1,10 +1,10 @@
-package br.edu.ufpel.cachesimulator.policies;
+package br.edu.ufpel.cache_simulator.policies;
 
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 
-import br.edu.ufpel.cachesimulator.model.Block;
+import br.edu.ufpel.cache_simulator.model.Block;
 
 public class FIFOPolicy implements ReplacementPolicy {
     private Queue<Block> fifoQueue = new LinkedList<>();

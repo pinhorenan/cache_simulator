@@ -1,4 +1,4 @@
-package br.edu.ufpel.cachesimulator.simulation;
+package br.edu.ufpel.cache_simulator.simulation;
 
 public class Statistics {
     private int totalAccesses;
@@ -15,7 +15,10 @@ public class Statistics {
         this.capacityMisses = 0;
     }
 
-    // Métodos para incrementar hits e misses
+    public void incrementAccesses() {
+        totalAccesses++;
+    }
+
     public void incrementsHit() {
         totalHits++;
     }
@@ -23,7 +26,7 @@ public class Statistics {
     public void incrementCompulsoryMiss() {
         compulsoryMisses++;
     }
-
+    
     public void incrementConflictMiss() {
         conflictMisses++;
     }

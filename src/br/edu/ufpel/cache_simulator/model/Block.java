@@ -1,4 +1,4 @@
-package br.edu.ufpel.cachesimulator.model;
+package br.edu.ufpel.cache_simulator.model;
 
 public class Block {
     private boolean valid;

@@ -1,9 +1,9 @@
-package br.edu.ufpel.cachesimulator.policies;
+package br.edu.ufpel.cache_simulator.policies;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import br.edu.ufpel.cachesimulator.model.Block;
+import br.edu.ufpel.cache_simulator.model.Block;
 
 public class LRUPolicy implements ReplacementPolicy {
     private List<Block> lruList = new ArrayList<>();

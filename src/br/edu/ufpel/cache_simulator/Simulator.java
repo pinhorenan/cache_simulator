@@ -1,10 +1,12 @@
-package br.edu.ufpel.cachesimulator.simulation;
+package br.edu.ufpel.cache_simulator;
 
 import java.io.*;
 
-import br.edu.ufpel.cachesimulator.config.Configuration;
-import br.edu.ufpel.cachesimulator.controller.CacheFactory;
-import br.edu.ufpel.cachesimulator.model.Cache;
+import br.edu.ufpel.cache_simulator.config.Configuration;
+import br.edu.ufpel.cache_simulator.controller.CacheFactory;
+import br.edu.ufpel.cache_simulator.model.Cache;
+import br.edu.ufpel.cache_simulator.simulation.Simulation;
+import br.edu.ufpel.cache_simulator.simulation.Statistics;
 
 public class Simulator {
     

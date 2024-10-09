@@ -1,9 +1,11 @@
-package br.edu.ufpel.cachesimulator.model;
+package br.edu.ufpel.cache_simulator.model;
 
 import java.util.List;
+
+import br.edu.ufpel.cache_simulator.policies.ReplacementPolicy;
+import br.edu.ufpel.cache_simulator.simulation.Statistics;
+
 import java.util.ArrayList;
-import br.edu.ufpel.cachesimulator.policies.ReplacementPolicy;
-import br.edu.ufpel.cachesimulator.simulation.Statistics;
 
 public class Set {
     private List<Block> blocks;
@@ -48,7 +50,7 @@ public class Set {
     }
 
     // Método para encontrar o bloco pela tag
-    private Block findBlockByTag(int tag) {
+    public Block findBlockByTag(int tag) {
         for (Block block : blocks) {
             if (block.isValid() && block.getTag() == tag) {
                 return block;
@@ -58,7 +60,7 @@ public class Set {
     }
 
     // Verifica se é um miss compulsório
-    private boolean isCompulsoryMiss(int tag) {
+    public boolean isCompulsoryMiss(int tag) {
         for (Block block : blocks) {
             if (!block.isValid()) {
                 return true;  // Miss compulsório, o bloco nunca foi carregado
@@ -68,7 +70,7 @@ public class Set {
     }
 
     // Verifica se é um miss de conflito
-    private boolean isConflictMiss() {
+    public boolean isConflictMiss() {
         for (Block block : blocks) {
             if (block.isValid()) {
                 return true;  // Miss de conflito, pois há blocos válidos
@@ -78,7 +80,7 @@ public class Set {
     }
 
     // Verifica se é um miss de capacidade
-    private boolean isCapacityMiss() {
+    public boolean isCapacityMiss() {
         boolean isFull = true;
         for (Block block : blocks) {
             if (!block.isValid()) {
@@ -87,5 +89,10 @@ public class Set {
             }
         }
         return isFull;  // É miss de capacidade se a cache estiver cheia
+    }
+
+    public Object getReplacementPolicy() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getReplacementPolicy'");
     }
 }
