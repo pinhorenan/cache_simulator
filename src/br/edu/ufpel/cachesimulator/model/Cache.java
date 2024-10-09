@@ -1,17 +1,19 @@
 package br.edu.ufpel.cachesimulator.model;
 
 import br.edu.ufpel.cachesimulator.policies.ReplacementPolicy;
+import br.edu.ufpel.cachesimulator.simulation.Statistics;
 
 public class Cache {
     private final Set[] sets;
     private final int offset;
     private final int indexLength;
+    private final Statistics statistics = new Statistics();  // Instância de Statistics
 
     // Construtores
     public Cache(int nsets, int bsize, int assoc, ReplacementPolicy subPolicy) {
-        this.sets = new Set[nsets];
+        sets = new Set[nsets];
         for (int i = 0; i < nsets; i++) {
-            sets[i] = new Set(assoc, subPolicy);
+            sets[i] = new Set(assoc, subPolicy, statistics);  // Passa a instância de Statistics para cada conjunto
         }
 
         this.offset = (int) (Math.log(bsize) / Math.log(2));  // Offset baseado no tamanho do bloco

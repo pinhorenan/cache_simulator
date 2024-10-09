@@ -4,35 +4,28 @@ import java.io.IOException;
 import java.util.List;
 
 import br.edu.ufpel.cachesimulator.config.FileHandler;
-import br.edu.ufpel.cachesimulator.model.Block;
-import br.edu.ufpel.cachesimulator.model.Cache;
-import br.edu.ufpel.cachesimulator.model.Set;
+import br.edu.ufpel.cachesimulator.model.*;
 
 public class Simulation {
     private final Cache cache;
     private final String inputFile;
-    private Statistics statistics;
+    private final Statistics statistics;
     
-    // Construtor
-
     public Simulation(Cache cache, String inputFile) {
         this.cache = cache;
         this.inputFile = inputFile;
-        statistics = new Statistics();
+        this.statistics = new Statistics();
     }
 
     public void runSimulation() throws IOException {
-
         List<Integer> addressesArray = FileHandler.readAddressesFromFile(inputFile);
 
         for (int address : getAddresses(addressesArray)) {
             accessAddress(address);
         }
 
-        return;
+        statistics.printStatistics();
     }
-
-    // Métodos
 
     public Statistics getStatistics() {
         return statistics;
@@ -50,17 +43,10 @@ public class Simulation {
         int index = (address >> offset) & ((1 << indexLength) - 1);
         
         Set set = cache.getSet(index);
-    
-        if (set.accessBlock(tag)) {  // Delega o acesso ao Set
+        
+        if (set.accessBlock(tag)) {
             statistics.incrementsHit();
-        } else {
-            statistics.incrementMiss();  // Você também pode ter um método para incrementar os misses
         }
-        if (!hit) {
-        // Caso de miss - aplicar a política de substituição
-        set.applyReplacementPolicy(tag);
-        }
-
-    // Incrementa contadores de hit/miss
     }
+    
 }

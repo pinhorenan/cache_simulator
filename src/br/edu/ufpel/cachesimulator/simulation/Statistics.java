@@ -81,7 +81,7 @@ public class Statistics {
 
     // Método para exibir as estatísticas
     public void printStatistics() {
-        System.out.println("Total Accesses: " + totalAccesses);
+        System.out.println("Accesses: " + totalAccesses);
         System.out.println("Hits: " + totalHits);
         System.out.println("Total Misses: " + getTotalMisses());
         System.out.println("Compulsory Misses: " + compulsoryMisses);
