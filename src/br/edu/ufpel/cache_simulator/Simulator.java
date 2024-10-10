@@ -4,7 +4,6 @@ import java.io.*;
 import java.util.List;
 import java.util.Map;
 
-import br.edu.ufpel.cache_simulator.config.Configuration;
 import br.edu.ufpel.cache_simulator.controller.InputOutputController;
 import br.edu.ufpel.cache_simulator.controller.Simulation;
 import br.edu.ufpel.cache_simulator.logging.Statistics;

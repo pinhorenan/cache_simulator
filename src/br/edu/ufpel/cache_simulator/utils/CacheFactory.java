@@ -1,20 +1,20 @@
 package br.edu.ufpel.cache_simulator.utils;
 
+import br.edu.ufpel.cache_simulator.Configuration;
 import br.edu.ufpel.cache_simulator.interfaces.*;
-import br.edu.ufpel.cache_simulator.config.Configuration;
 import br.edu.ufpel.cache_simulator.model.Cache;
 
 public class CacheFactory {
     public static Cache createCache(Configuration config) {
         ReplacementPolicy policy;
         switch (config.getReplacementPolicy()) {
-            case "fifo":
+            case "F":
                 policy = new FIFOReplacement();
                 break;
-            case "lru":
+            case "L":
                 policy = new LRUReplacement();
                 break;
-            case "r":
+            case "R":
                 policy = new RandomReplacement();
                 break;
             default:
