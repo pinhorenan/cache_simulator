@@ -12,11 +12,11 @@
 
 ## Parâmetros de execução para a simulação?
 
-### <nsets>: Define o número de conjuntos da cache, deve ser um inteiro positivo.
-### <bsize>: Define o tamanho do bloco, deve ser um inteiro positivo.
-### <assoc>: Define o nível de associatividade da cache, deve ser um inteiro positivo.
-### <substituição>: Define a política de substituição utilizada para substituir um bloco quando ocorre um miss. Os valores possíveis são: "R" para Random, "L" para LRU e "F" para FIFO.
-### <flag_saída>: Define a verbosidade da saída. Valor booleano, com "0" retornando uma saída com formatação livre e "1" retornando uma formatação padronizada e concisa.
+### < nsets >: Define o número de conjuntos da cache, deve ser um inteiro positivo.
+### < bsize >: Define o tamanho do bloco, deve ser um inteiro positivo.
+### < assoc >: Define o nível de associatividade da cache, deve ser um inteiro positivo.
+### < substituição >: Define a política de substituição utilizada para substituir um bloco quando ocorre um miss. Os valores possíveis são: "R" para Random, "L" para LRU e "F" para FIFO.
+### < flag_saída >: Define a verbosidade da saída. Valor booleano, com "0" retornando uma saída com formatação livre e "1" retornando uma formatação padronizada e concisa.
 ### arquivo_de_entrada: O arquivo de entrada para a simulação. Deve ser um arquivo binário no formato Big Endian.
 
 ## Problemas conhecidos:
