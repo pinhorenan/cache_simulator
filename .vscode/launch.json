@@ -3,90 +3,113 @@
     "configurations": [
         {
             "type": "java",
-            "name": "bin_100",
+            "name": "Exemplo 1 - bin_100",
             "request": "launch",
             "mainClass": "br.edu.ufpel.cache_simulator.Simulator",
             "projectName": "cache_simulator_67781d32",
             "args": [
-                "256", "4", "1", "r", "0", "src\\br\\edu\\ufpel\\cache_simulator\\tests\\samples\\bin_100.bin"
+                "256", "4", "1", "R", "1", "src\\br\\edu\\ufpel\\cache_simulator\\tests\\samples\\bin_100.bin"
             ]
         },
-
         {
             "type": "java",
-            "name": "bin_1000",
+            "name": "Exemplo 2 - bin_1000",
             "request": "launch",
             "mainClass": "br.edu.ufpel.cache_simulator.Simulator",
             "projectName": "cache_simulator_67781d32",
             "args": [
-                "256", "4", "1", "r", "0", "src\\br\\edu\\ufpel\\cache_simulator\\tests\\samples\\bin_1000.bin"
+                "128", "2", "4", "R", "1", "src\\br\\edu\\ufpel\\cache_simulator\\tests\\samples\\bin_1000.bin"
             ]
         },
-
         {
             "type": "java",
-            "name": "bin_10000",
+            "name": "Exemplo 3 - bin_10000",
             "request": "launch",
             "mainClass": "br.edu.ufpel.cache_simulator.Simulator",
             "projectName": "cache_simulator_67781d32",
             "args": [
-                "256", "4", "1", "r", "0", "src\\br\\edu\\ufpel\\cache_simulator\\tests\\samples\\bin_10000.bin"
+                "16", "2", "8", "R", "1", "src\\br\\edu\\ufpel\\cache_simulator\\tests\\samples\\bin_10000.bin"
             ]
         },
-
         {
             "type": "java",
-            "name": "vortex.in.sem.persons",
+            "name": "Exemplo 4 - vortex.in.sem.persons",
             "request": "launch",
             "mainClass": "br.edu.ufpel.cache_simulator.Simulator",
             "projectName": "cache_simulator_67781d32",
             "args": [
-                "256", "4", "1", "r", "0", "src\\br\\edu\\ufpel\\cache_simulator\\tests\\samples\\vortex.in.sem.persons.bin"
+                "512", "8", "2", "R", "1", "src\\br\\edu\\ufpel\\cache_simulator\\tests\\samples\\vortex.in.sem.persons.bin"
             ]
         },
-
         {
             "type": "java",
-            "name": "Xbin_100",
+            "name": "Exemplo 5 - vortex.in.sem.persons",
             "request": "launch",
             "mainClass": "br.edu.ufpel.cache_simulator.Simulator",
             "projectName": "cache_simulator_67781d32",
             "args": [
-                "256", "4", "1", "r", "1", "src\\br\\edu\\ufpel\\cache_simulator\\tests\\samples\\bin_100.bin"
+                "1", "4", "32", "R", "1", "src\\br\\edu\\ufpel\\cache_simulator\\tests\\samples\\vortex.in.sem.persons.bin"
             ]
         },
-
         {
             "type": "java",
-            "name": "Xbin_1000",
+            "name": "Exemplo 6 - bin_100 (Random)",
             "request": "launch",
             "mainClass": "br.edu.ufpel.cache_simulator.Simulator",
             "projectName": "cache_simulator_67781d32",
             "args": [
-                "256", "4", "1", "r", "1", "src\\br\\edu\\ufpel\\cache_simulator\\tests\\samples\\bin_1000.bin"
+                "2", "1", "8", "R", "1", "src\\br\\edu\\ufpel\\cache_simulator\\tests\\samples\\bin_100.bin"
             ]
         },
-
         {
             "type": "java",
-            "name": "Xbin_10000",
+            "name": "Exemplo 7 - bin_100 (LRU)",
             "request": "launch",
             "mainClass": "br.edu.ufpel.cache_simulator.Simulator",
             "projectName": "cache_simulator_67781d32",
             "args": [
-                "256", "4", "1", "r", "1", "src\\br\\edu\\ufpel\\cache_simulator\\tests\\samples\\bin_10000.bin"
+                "2", "1", "8", "L", "1", "src\\br\\edu\\ufpel\\cache_simulator\\tests\\samples\\bin_100.bin"
             ]
         },
-
         {
             "type": "java",
-            "name": "Xvortex.in.sem.persons",
+            "name": "Exemplo 8 - bin_100 (FIFO)",
             "request": "launch",
             "mainClass": "br.edu.ufpel.cache_simulator.Simulator",
             "projectName": "cache_simulator_67781d32",
             "args": [
-                "256", "4", "1", "r", "1", "src\\br\\edu\\ufpel\\cache_simulator\\tests\\samples\\vortex.in.sem.persons.bin"
+                "2", "1", "8", "F", "1", "src\\br\\edu\\ufpel\\cache_simulator\\tests\\samples\\bin_100.bin"
             ]
         },
+        {
+            "type": "java",
+            "name": "Exemplo 9 - vortex.in.sem.persons (Random)",
+            "request": "launch",
+            "mainClass": "br.edu.ufpel.cache_simulator.Simulator",
+            "projectName": "cache_simulator_67781d32",
+            "args": [
+                "1", "4", "32", "R", "1", "src\\br\\edu\\ufpel\\cache_simulator\\tests\\samples\\vortex.in.sem.persons.bin"
+            ]
+        },
+        {
+            "type": "java",
+            "name": "Exemplo 10 - vortex.in.sem.persons (LRU)",
+            "request": "launch",
+            "mainClass": "br.edu.ufpel.cache_simulator.Simulator",
+            "projectName": "cache_simulator_67781d32",
+            "args": [
+                "1", "4", "32", "L", "1", "src\\br\\edu\\ufpel\\cache_simulator\\tests\\samples\\vortex.in.sem.persons.bin"
+            ]
+        },
+        {
+            "type": "java",
+            "name": "Exemplo 11 - vortex.in.sem.persons (FIFO)",
+            "request": "launch",
+            "mainClass": "br.edu.ufpel.cache_simulator.Simulator",
+            "projectName": "cache_simulator_67781d32",
+            "args": [
+                "1", "4", "32", "F", "1", "src\\br\\edu\\ufpel\\cache_simulator\\tests\\samples\\vortex.in.sem.persons.bin"
+            ]
+        }
     ]
 }

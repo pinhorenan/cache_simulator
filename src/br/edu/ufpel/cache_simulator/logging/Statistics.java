@@ -95,8 +95,9 @@ public class Statistics {
         System.out.println("Capacity Miss Rate: " + getCapacityMissRate());    
     }
 
-    // Exibição de acordo com o especificado no enunciado 
+    // Exibição de acordo com o especificado no enunciado (Total de acessos, Taxa de hit, Taxa de miss, Taxa de miss compulsório, Taxa de miss de capacidade, Taxa de miss de conflito)
     public void printConciseResults() {
-        System.out.printf("%d %.2f %.2f %.2f %.2f %.2f%n",getTotalAccesses(), getHitRate(), getMissRate(), getCompulsoryMissRate(), getCapacityMissRate(), getConflictMissRate());
+        System.out.printf("%d %.4f %.4f %.4f %.4f %.4f%n",getTotalAccesses(), getHitRate(), getMissRate(), getCompulsoryMissRate(), getCapacityMissRate(), getConflictMissRate());
     }
 }
+ 
