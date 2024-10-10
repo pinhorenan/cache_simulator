@@ -1,4 +1,4 @@
-package br.edu.ufpel.cache_simulator.controller;
+package cache_simulator.controller;
 
 import java.io.BufferedReader;
 import java.io.DataInputStream;

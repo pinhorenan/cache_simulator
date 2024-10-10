@@ -1,8 +1,8 @@
-package br.edu.ufpel.cache_simulator.model;
+package cache_simulator.model;
 
 import java.util.List;
-import br.edu.ufpel.cache_simulator.interfaces.ReplacementPolicy;
 import java.util.ArrayList;
+import cache_simulator.interfaces.ReplacementPolicy;
 
 public class Set {
     private List<Block> blocks;

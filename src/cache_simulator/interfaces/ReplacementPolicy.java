@@ -1,8 +1,8 @@
-package br.edu.ufpel.cache_simulator.interfaces;
+package cache_simulator.interfaces;
 
 import java.util.List;
 
-import br.edu.ufpel.cache_simulator.model.Block;
+import cache_simulator.model.Block;
 
 public interface ReplacementPolicy {
     Block selectBlockToReplace(List<Block> blocks);

@@ -1,9 +1,44 @@
-@ECHO OFF
+@echo off
+SETLOCAL ENABLEDELAYEDEXPANSION
 
-javac -d out\ src\br\edu\ufpel\cache_simulator\*\*.java src\br\edu\ufpel\cache_simulator\*.java
-cd out
-jar cvfm ..\cache_simulator.jar Simulator.mf br\edu\ufpel\cache_simulator\*\*.class br\edu\ufpel\cache_simulator\*.class
-cd..
-jpackage --input . --main-jar cache_simulator.jar
+REM Define o diretório de saída para os arquivos .class
+set OUTPUT_DIR=out
+
+REM Compila todos os arquivos Java no diretório src
+echo Compilando arquivos Java...
+if not exist "%OUTPUT_DIR%" (
+    mkdir "%OUTPUT_DIR%"
+)
+
+REM Lista de arquivos Java
+set SOURCE_FILES=
+for %%f in (src\cache_simulator\*.java) do (
+    set SOURCE_FILES=!SOURCE_FILES! %%f
+)
+for %%f in (src\cache_simulator\*\*.java) do (
+    set SOURCE_FILES=!SOURCE_FILES! %%f
+)
+
+javac -d "%OUTPUT_DIR%" %SOURCE_FILES%
+
+REM Verifica se a compilação foi bem-sucedida
+if errorlevel 1 (
+    echo Erro na compilacao.
+    exit /b 1
+)
+
+REM Cria o arquivo JAR, se a compilação for bem-sucedida
+cd %OUTPUT_DIR%
+jar cvfm ../Simulator.jar ../Simulator.mf *.class
+cd ..
+
+REM Cria um script executável para Linux
+echo #!/usr/bin/env java -jar > linux\cache_simulator
+type Simulator.jar >> linux\cache_simulator
+chmod +x linux\cache_simulator
+
+REM Limpeza: Remove o JAR temporário após criar o executável
 del Simulator.jar
-del out\br\*
+
+echo Compilacao e empacotamento concluídos.
+ENDLOCAL

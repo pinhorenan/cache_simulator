@@ -1,9 +1,9 @@
-package br.edu.ufpel.cache_simulator.controller;
+package cache_simulator.controller;
 
 import java.util.List;
 
-import br.edu.ufpel.cache_simulator.model.*;
-import br.edu.ufpel.cache_simulator.logging.Statistics;
+import cache_simulator.model.*;
+import cache_simulator.logging.Statistics;
 
 public class Simulation {
     private final Cache cache;

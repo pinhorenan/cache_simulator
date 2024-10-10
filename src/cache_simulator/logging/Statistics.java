@@ -1,4 +1,4 @@
-package br.edu.ufpel.cache_simulator.logging;
+package cache_simulator.logging;
 
 public class Statistics {
     private int totalAccesses;
