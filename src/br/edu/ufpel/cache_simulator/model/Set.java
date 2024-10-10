@@ -1,9 +1,7 @@
 package br.edu.ufpel.cache_simulator.model;
 
 import java.util.List;
-
 import br.edu.ufpel.cache_simulator.interfaces.ReplacementPolicy;
-
 import java.util.ArrayList;
 
 public class Set {
@@ -23,7 +21,7 @@ public class Set {
     public List<Block> getBlocks() {
         return blocks;
     }
-    
+
     public ReplacementPolicy getReplacementPolicy() {
         return replacementPolicy;
     }
@@ -38,18 +36,32 @@ public class Set {
     }
 
     public void replaceBlock(int tag) {
-        // Aqui você pode implementar a lógica de substituição
-        // Por exemplo, substituir o primeiro bloco inválido ou aplicar alguma política (LRU, FIFO, etc.)
+        // Tenta substituir um bloco inválido primeiro
         for (Block block : blocks) {
             if (!block.isValid()) {
                 block.setTag(tag);
                 block.setValid();
-                return;  // Substituição concluída
+                replacementPolicy.update(block); // Atualiza a política de substituição
+                return; // Substituição concluída
             }
         }
 
-        // Se todos os blocos forem válidos, você pode substituir um bloco com base em sua política
-        // Exemplo simples: substitui o primeiro bloco
-        blocks.get(0).setTag(tag);  // Substitui o primeiro bloco (você pode melhorar essa lógica)
+        // Se todos os blocos forem válidos, utiliza a política de substituição
+        Block blockToReplace = replacementPolicy.selectBlockToReplace(blocks);
+        blockToReplace.setTag(tag);
+        blockToReplace.setValid();
+        replacementPolicy.update(blockToReplace); // Atualiza a política de substituição
+    }
+
+    public void loadNewBlock(int tag) {
+        // Encontra o primeiro bloco inválido e o atualiza
+        for (Block block : blocks) {
+            if (!block.isValid()) {
+                block.setTag(tag);
+                block.setValid();
+                replacementPolicy.update(block); // Atualiza a política de substituição
+                return;
+            }
+        }
     }
 }

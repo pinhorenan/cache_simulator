@@ -33,23 +33,21 @@ public class CacheController {
         updateStatistics(hit, set, tag);
     }
 
-     // Atualiza as estatísticas baseado no resultado do acesso
-     private void updateStatistics(boolean hit, Set set, int tag) {
+    // Atualiza as estatísticas baseado no resultado do acesso
+    private void updateStatistics(boolean hit, Set set, int tag) {
         if (hit) {
             statistics.incrementHit();
         } else {
             // Verifica o tipo de miss e atualiza as estatísticas
             if (isCompulsoryMiss(set, tag)) {
                 statistics.incrementCompulsoryMiss();
-                loadNewBlock(set, tag);
+                set.loadNewBlock(tag); // Chama o método no Set
             } else if (isCapacityMiss(set)) {
-                // Miss de capacidade
                 statistics.incrementCapacityMiss();
-                replaceBlock(set, tag);
+                set.replaceBlock(tag); // Chama o método no Set
             } else if (isConflictMiss(set, tag)) {
-                // Miss de conflito
                 statistics.incrementConflictMiss();
-                replaceBlock(set, tag);
+                set.replaceBlock(tag); // Chama o método no Set
             }
         }
     }
@@ -83,25 +81,5 @@ public class CacheController {
             }
         }
         return true;
-    }
-
-    // Substitui um bloco no conjunto de acordo com a política de substituição
-    private void replaceBlock(Set set, int tag) {
-        Block blockToReplace = set.getReplacementPolicy().selectBlockToReplace(set.getBlocks());
-        blockToReplace.setTag(tag);
-        blockToReplace.setValid();
-        set.getReplacementPolicy().update(blockToReplace); // Atualiza a política de substituição
-    }
-
-    private void loadNewBlock(Set set, int tag) {
-        // Encontra o primeiro bloco inválido e o atualiza
-        for (Block block : set.getBlocks()) {
-            if (!block.isValid()) {
-                block.setTag(tag);
-                block.setValid();
-                set.getReplacementPolicy().update(block); // Atualiza a política de substituição
-                return;
-            }
-        }
     }
 }

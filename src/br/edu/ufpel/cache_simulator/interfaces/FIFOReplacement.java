@@ -22,6 +22,7 @@ public class FIFOReplacement implements ReplacementPolicy {
     @Override
     public void update(Block block) {
         // Apenas adiciona o bloco ao final da fila, sem remover outros blocos
+        // Verifica se o bloco não está na fila antes de adicionar
         if (!fifoQueue.contains(block)) {
             fifoQueue.add(block);
         }
