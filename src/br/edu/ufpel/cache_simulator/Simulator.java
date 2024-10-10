@@ -56,7 +56,6 @@ public class Simulator {
 
         Configuration configuration = new Configuration(nsets, bsize, assoc, subPolicy);
         Cache cache = CacheFactory.createCache(configuration);
-
         Simulation simulation = new Simulation(cache, addresses);
 
         // Roda a simulação

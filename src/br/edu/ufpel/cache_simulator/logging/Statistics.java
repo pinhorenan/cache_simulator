@@ -97,6 +97,6 @@ public class Statistics {
 
     // Exibição de acordo com o especificado no enunciado 
     public void printConciseResults() {
-        System.out.println(getTotalAccesses() + getHitRate() +  getMissRate() + getCompulsoryMissRate() + getCapacityMissRate() + getConflictMissRate());
+        System.out.printf("%d %.2f %.2f %.2f %.2f %.2f%n",getTotalAccesses(), getHitRate(), getMissRate(), getCompulsoryMissRate(), getCapacityMissRate(), getConflictMissRate());
     }
 }
