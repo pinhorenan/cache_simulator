@@ -1,4 +1,4 @@
-package br.edu.ufpel.cache_simulator.config;
+package br.edu.ufpel.cache_simulator;
 
 public class Configuration {
     private int nsets;
@@ -41,4 +41,3 @@ public class Configuration {
     }
 
 }
-
