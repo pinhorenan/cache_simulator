@@ -1,3 +1,5 @@
 #!/bin/sh
 
 javac -d out/ src/br/edu/ufpel/cache_simulator/*/*.java src/br/edu/ufpel/cache_simulator/*.java
+cd out
+jar cvfm ../Simulator.jar Simulator.mf br/edu/ufpel/cache_simulator/*/*.class br/edu/ufpel/cache_simulator/*.class
