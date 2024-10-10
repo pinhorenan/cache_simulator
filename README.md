@@ -5,4 +5,4 @@
 
 ### Linux
 - Execute `$ ./compile.sh` dentro do diretório do código fonte
-- Após a compilação, o arquivo executável poderá ser encontrado dentro do diretório "linux". Execute com `$ ./cache_simulator <nsets> <bsize> <assoc> <substituição> <flag_saida> arquivo_de_entrada`
+- Após a compilação, o arquivo executável poderá ser encontrado dentro do diretório "linux". Execute com ```$ ./cache_simulator <nsets> <bsize> <assoc> <substituição> <flag_saida> arquivo_de_entrada```
