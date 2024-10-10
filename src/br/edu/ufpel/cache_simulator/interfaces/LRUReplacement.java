@@ -9,25 +9,28 @@ public class LRUReplacement implements ReplacementPolicy {
 
     @Override
     public Block selectBlockToReplace(List<Block> blocks) {
-        // Inicializa a lista LRU se estiver vazia
-        if (lruList.isEmpty()) {
-            lruList.addAll(blocks);  // Preenche a lista com todos os blocos
-        }
         // Remove e retorna o bloco menos recentemente usado (primeiro da lista)
+        if (lruList.isEmpty()) {
+            throw new IllegalStateException("LRU list is empty. No block to replace.");
+        }
         return lruList.remove(0);
     }
 
     @Override
     public void update(Block block) {
-        // Remove o bloco da lista se já estiver presente (foi acessado novamente)
-        lruList.remove(block);
-        // Reinsere o bloco no final da lista (mais recentemente usado)
-        lruList.add(block);
+        // Se o bloco não estiver na lista, adiciona
+        if (!lruList.contains(block)) {
+            lruList.add(block); // Adiciona o bloco ao final da lista
+        } else {
+            // Remove o bloco da lista se já estiver presente
+            lruList.remove(block);
+            // Adiciona ao final (mais recentemente usado)
+            lruList.add(block);
+        }
     }
 
     @Override
     public String getName() {
         return "LRU";
     }
-
 }

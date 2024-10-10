@@ -11,13 +11,8 @@ public class FIFOReplacement implements ReplacementPolicy {
 
     @Override
     public Block selectBlockToReplace(List<Block> blocks) {
-        // Inicializa a fila FIFO se estiver vazia
-        if (fifoQueue.isEmpty()) {
-            fifoQueue.addAll(blocks);  // Preenche a fila com todos os blocos
-        }
-
         // Remove e retorna o bloco mais antigo (primeiro da fila)
-        Block block = fifoQueue.poll();  // Retorna null se a fila estiver vazia
+        Block block = fifoQueue.poll();
         if (block == null) {
             throw new IllegalStateException("FIFO queue is empty. No block to replace.");
         }
@@ -26,13 +21,14 @@ public class FIFOReplacement implements ReplacementPolicy {
 
     @Override
     public void update(Block block) {
-        // Adiciona o bloco ao final da fila FIFO
-        fifoQueue.add(block);
+        // Apenas adiciona o bloco ao final da fila, sem remover outros blocos
+        if (!fifoQueue.contains(block)) {
+            fifoQueue.add(block);
+        }
     }
 
     @Override
     public String getName() {
         return "FIFO";
     }
-
 }

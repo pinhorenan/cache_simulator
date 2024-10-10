@@ -41,16 +41,19 @@ public class CacheController {
             // Verifica o tipo de miss e atualiza as estatísticas
             if (isCompulsoryMiss(set, tag)) {
                 statistics.incrementCompulsoryMiss();
+                loadNewBlock(set, tag);
             } else if (isCapacityMiss(set)) {
-                // Primeiro verifica se está cheio, miss de capacidade
+                // Miss de capacidade
                 statistics.incrementCapacityMiss();
-            } else {
-                // Caso não seja capacidade, será miss de conflito
+                replaceBlock(set, tag);
+            } else if (isConflictMiss(set, tag)) {
+                // Miss de conflito
                 statistics.incrementConflictMiss();
+                replaceBlock(set, tag);
             }
-            replaceBlock(set, tag); // Substitui o bloco se for miss
         }
     }
+    
 
     private boolean isCompulsoryMiss(Set set, int tag) {
         // Miss compulsório ocorre quando o bloco é inválido
@@ -62,15 +65,15 @@ public class CacheController {
         return false;
     }
 
-    private boolean isConflictMiss(Set set) {
-        // Miss de conflito ocorre quando há blocos válidos no conjunto mas a tag não bate
+    private boolean isConflictMiss(Set set, int tag) {
         for (Block block : set.getBlocks()) {
-            if (block.isValid()) {
-                return true;
+            if (block.isValid() && block.getTag() != tag) {
+                return true;  // Se há um bloco válido, mas a tag não bate, é um miss de conflito.
             }
         }
-        return false;
+        return false;  // Se não encontrou blocos válidos que não correspondem à tag, não é um miss de conflito.
     }
+    
 
     private boolean isCapacityMiss(Set set) {
         // Miss de capacidade ocorre quando a cache está cheia
@@ -88,5 +91,17 @@ public class CacheController {
         blockToReplace.setTag(tag);
         blockToReplace.setValid();
         set.getReplacementPolicy().update(blockToReplace); // Atualiza a política de substituição
+    }
+
+    private void loadNewBlock(Set set, int tag) {
+        // Encontra o primeiro bloco inválido e o atualiza
+        for (Block block : set.getBlocks()) {
+            if (!block.isValid()) {
+                block.setTag(tag);
+                block.setValid();
+                set.getReplacementPolicy().update(block); // Atualiza a política de substituição
+                return;
+            }
+        }
     }
 }
