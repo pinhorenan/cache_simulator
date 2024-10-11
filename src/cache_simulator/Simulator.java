@@ -4,8 +4,8 @@ import java.io.*;
 import java.util.List;
 import java.util.Map;
 
-import cache_simulator.controller.InputOutputController;
-import cache_simulator.controller.Simulation;
+import cache_simulator.controller.IOController;
+import cache_simulator.controller.SimulationController;
 import cache_simulator.logging.Statistics;
 import cache_simulator.model.Cache;
 import cache_simulator.utils.CacheFactory;
@@ -25,7 +25,7 @@ public class Simulator {
         if (args.length == 2 && args[0].endsWith(".cfg")) {
             // Modo arquivo de configuração
             String configFilePath = args[0];
-            Map<String, String> configValues = InputOutputController.readConfigurationFromFile(configFilePath);
+            Map<String, String> configValues = IOController.readConfigurationFromFile(configFilePath);
 
             // Leitura das configurações do arquivo .cfg
             nsets = Integer.parseInt(configValues.get("nsets"));
@@ -51,11 +51,11 @@ public class Simulator {
         }
 
         // Leitura dos endereços do arquivo
-        List<Integer> addresses = InputOutputController.readAddressesFromFile(inputFile);
+        List<Integer> addresses = IOController.readAddressesFromFile(inputFile);
 
         Configuration configuration = new Configuration(nsets, bsize, assoc, subPolicy);
         Cache cache = CacheFactory.createCache(configuration);
-        Simulation simulation = new Simulation(cache, addresses);
+        SimulationController simulation = new SimulationController(cache, addresses);
 
         // Roda a simulação
         simulation.runSimulation();

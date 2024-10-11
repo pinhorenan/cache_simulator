@@ -5,13 +5,13 @@ import java.util.List;
 import cache_simulator.model.*;
 import cache_simulator.logging.Statistics;
 
-public class Simulation {
+public class SimulationController {
     private final Cache cache;
     private final CacheController cacheController;
     private final List<Integer> addresses;
     private final Statistics statistics;
     
-    public Simulation(Cache cache, List<Integer> addresses) {
+    public SimulationController(Cache cache, List<Integer> addresses) {
         this.cache = cache;
         this.addresses = addresses;
         this.statistics = new Statistics();

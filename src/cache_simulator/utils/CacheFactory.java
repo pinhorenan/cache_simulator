@@ -7,7 +7,7 @@ import cache_simulator.model.Cache;
 public class CacheFactory {
     public static Cache createCache(Configuration config) {
         ReplacementPolicy policy;
-        switch (config.getReplacementPolicy()) {
+        switch (config.policy) {
             case "F":
                 policy = new FIFOReplacement();
                 break;
@@ -18,9 +18,9 @@ public class CacheFactory {
                 policy = new RandomReplacement();
                 break;
             default:
-                throw new IllegalArgumentException("Política de substituição inválida");
+                throw new IllegalArgumentException("Política de substituição inválida. Os parâmetros aceitos são: F, L e R.");
         }
-        return new Cache(config.getNumberSets(), config.getBlockSize(), config.getAssociativity(), policy);
+        return new Cache(config.nsets, config.bsize, config.assoc, policy);
     }
 }
 

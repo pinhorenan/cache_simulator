@@ -10,7 +10,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class InputOutputController {
+public class IOController {
 
     // Lê os endereços de memória de um arquivo binário Big Endian
     public static List<Integer> readAddressesFromFile(String inputFile) throws IOException {

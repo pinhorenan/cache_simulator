@@ -3,14 +3,14 @@ package cache_simulator.model;
 public class Block {
     private boolean valid;
     private int tag;
-    private int bsize;
+    private int size;
 
     // Construtor
 
-    public Block(int bsize) {
+    public Block(int size) {
         this.valid = false;
         this.tag = -1;
-        this.bsize = bsize;
+        this.size = size;
     }
 
     // Getters e Setters
@@ -31,8 +31,8 @@ public class Block {
         this.tag = tag;
     }
 
-    public int getBlockSize() {
-        return bsize;
+    public int getSize() {
+        return size;
     }
 }
 
